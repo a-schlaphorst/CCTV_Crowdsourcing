@@ -22,13 +22,22 @@
 	<link rel="stylesheet" href="external/L.Control.Locate.css"/>
 	<script type="text/javascript" src="external/L.Control.Locate.js"></script>
 	
-	<script src="app.js"></script>
+	<!--leaflet editable-->
+	<script type="text/javascript" src="external/Leaflet.Editable.js"></script>
+	
+	<script src="delegator.js"></script>
+	<script src="homeMap.js"></script>
+	<script src="addCamera.js"></script>
 	
 	<style>
 	#home-page {
 		height: 100%;
 	}
 	#map{
+		height: 100%;
+		width: 100%;
+	}
+	#add-camera-map{
 		height: 100%;
 		width: 100%;
 	}
@@ -47,6 +56,11 @@
 		padding-left: 10px;
 		padding-right: 10px;
 	}
+	.center-image{
+		height:150px;
+		margin-left: auto;
+		margin-right: auto;
+	}
 	</style>
 </head>
 <body>
@@ -54,7 +68,7 @@
 	<div data-role="page" id="home-page">
 	
 		<div data-role="header" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false">
-			<h1>Header Title</h1>
+			<h1>App-Name</h1>
 		</div>
 		
 		<div role="content" class="ui-content">
@@ -68,7 +82,7 @@
 				<ul>
 					<li><a href="#select-camera-page">Add a camera</a></li>
 					<li><a href="#" class="ui-btn-active ui-state-persist">Map</a></li>
-					<li><a href="#">Navigate</a></li>
+					<li><a href="#navigate-page">Navigate</a></li>
 				</ul>
 			</div>
 		</div>
@@ -87,17 +101,17 @@
 			</p>
 		
 			<ul data-role="listview" data-inset="true">
-				<li><a href="#confirm-camera-page">
+				<li><a href="#confirm-dome-camera-page">
 					<img src="images/dome.jpg">
 					<h2>Dome camera</h2>
 					<p>360&deg; View</p></a>
 				</li>
-				<li><a href="#confirm-camera-page">
+				<li><a href="#confirm-bullet-camera-page">
 					<img src="images/bullet.jpg">
 					<h2>Bullet Camera</h2>
 					<p>Specific viewing angle</p></a>
 				</li>
-				<li><a href="#confirm-camera-page">
+				<li><a href="#confirm-mobile-camera-page">
 					<img src="images/mobile.jpg">
 					<h2>Mobile Camera</h2>
 					<p>Not fixed to a single location</p></a>
@@ -110,39 +124,54 @@
 				<ul>
 					<li><a href="#select-camera-page" class="ui-btn-active ui-state-persist">Add a camera</a></li>
 					<li><a href="#home-page">Map</a></li>
-					<li><a href="#">Navigate</a></li>
+					<li><a href="#navigate-page">Navigate</a></li>
 				</ul>
 			</div>
 		</div>
 	</div>
 	
-	<div data-role="page" id="confirm-camera-page">
+	<div data-role="page" id="navigate-page">
+	
+		<div data-role="header" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false">
+			<h1>Navigate</h1>
+		</div>
+		
+		<div role="content" class="ui-content">
+			<div class="simple-content">
+				
+				<p>This crazy feature is unfortunately not yet available</p>
+				<img src="images/mobile.jpg" class="center-image">
+			</div>
+		</div>
+		
+		<div data-role="footer" data-position="fixed" data-tap-toggle="false">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#select-camera-page">Add a camera</a></li>
+					<li><a href="#home-page">Map</a></li>
+					<li><a href="#navigate-page" class="ui-btn-active ui-state-persist">Navigate</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div data-role="page" id="confirm-dome-camera-page">
 	
 		<div data-role="header" data-position="fixed">
 			<h1>Step 2: Confirm Details</h1>
 			<a href="#select-camera-page" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-arrow-l">Back</a>
-			<a href="#home-page" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-check">Confirm</a>
+			<a href="#add-camera-map-page" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-check">Confirm</a>
 		</div>
 		
 		<div role="content" class="ui-content">
 			<div id="simple-content">
 				<label for="slider-height">Camera Height in feet:</label>
-				<input name="slider-height" id="slider-height" value="25" min="0" max="100" data-highlight="true" type="range">
+				<input name="slider-height" id="slider-height" value="15" min="10" max="30" data-highlight="true" type="range">
 			
 			
-				<img src="images/dome.jpg" alt="Dome-Camera Image" style="height:150px">
-			
-				<form>
-					<fieldset data-role="controlgroup" data-type="horizontal">
-						<legend>Viewing Angle:</legend>
-						<input name="radio-choice-h-2" id="radio-choice-h-2a" value="on" checked="checked" type="radio">
-						<label for="radio-choice-h-2a">360&deg;</label>
-						<input name="radio-choice-h-2" id="radio-choice-h-2b" value="off" type="radio">
-						<label for="radio-choice-h-2b">180&deg;</label>
-						<input name="radio-choice-h-2" id="radio-choice-h-2c" value="off" type="radio">
-						<label for="radio-choice-h-2c">Draw your own</label>
-					</fieldset>
-				</form>
+				<img src="images/dome.jpg" alt="Dome-Camera Image" class="center-image">
+				
+				<p>Some description text... based on height we will create a sample circle which can be edited in the next step. Maybe adding some kind of input for viewing angle?</p>
 			</div>
 		</div>
 		
@@ -151,7 +180,93 @@
 				<ul>
 					<li><a href="#add-camera-page" class="ui-btn-active ui-state-persist">Add a camera</a></li>
 					<li><a href="#home-page">Map</a></li>
-					<li><a href="#">Navigate</a></li>
+					<li><a href="#navigate-page">Navigate</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div data-role="page" id="confirm-bullet-camera-page">
+	
+		<div data-role="header" data-position="fixed">
+			<h1>Step 2: Confirm Details</h1>
+			<a href="#select-camera-page" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-arrow-l">Back</a>
+			<a href="#add-camera-map-page" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-check">Confirm</a>
+		</div>
+		
+		<div role="content" class="ui-content">
+			<div id="simple-content">
+				<label for="slider-height">Camera Height in feet:</label>
+				<input name="slider-height" id="slider-height" value="15" min="10" max="30" data-highlight="true" type="range">
+			
+			
+				<img src="images/bullet.jpg" alt="Bullet-Camera Image" class="center-image">
+				
+				<p>Some description text... based on height we will create a sample circle which can be edited in the next step</p>
+			</div>
+		</div>
+		
+		<div data-role="footer" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#add-camera-page" class="ui-btn-active ui-state-persist">Add a camera</a></li>
+					<li><a href="#home-page">Map</a></li>
+					<li><a href="#navigate-page">Navigate</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div data-role="page" id="confirm-mobile-camera-page">
+	
+		<div data-role="header" data-position="fixed">
+			<h1>Step 2: Confirm Details</h1>
+			<a href="#select-camera-page" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-arrow-l">Back</a>
+			<a href="#add-camera-map-page" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-check">Confirm</a>
+		</div>
+		
+		<div role="content" class="ui-content">
+			<div id="simple-content">
+				<label for="slider-height">Camera Height in feet:</label>
+				<input name="slider-height" id="slider-height" value="15" min="10" max="30" data-highlight="true" type="range">
+			
+			
+				<img src="images/mobile.jpg" alt="Mobile-Camera Image" class="center-image">
+				
+				<p>Some description text... based on height we will create a sample circle which can be edited in the next step.</p>
+			</div>
+		</div>
+		
+		<div data-role="footer" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#add-camera-page" class="ui-btn-active ui-state-persist">Add a camera</a></li>
+					<li><a href="#home-page">Map</a></li>
+					<li><a href="#navigate-page">Navigate</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div data-role="page" id="add-camera-map-page">
+	
+		<div data-role="header" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false">
+			<h1>Step 3: Place Camera</h1>
+			<a href="#home-page" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-check">Confirm</a>
+		</div>
+		
+		<div role="content" class="ui-content">
+			<div data-role="listview" id="map-panel">
+				<div id="add-camera-map"></div>
+			</div>
+		</div>
+		
+		<div data-role="footer" data-position="fixed" data-tap-toggle="false">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#select-camera-page" class="ui-btn-active ui-state-persist">Add a camera</a></li>
+					<li><a href="#home-page">Map</a></li>
+					<li><a href="#navigate-page">Navigate</a></li>
 				</ul>
 			</div>
 		</div>
