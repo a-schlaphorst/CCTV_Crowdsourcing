@@ -7,7 +7,7 @@ var homeMap;
 function initializeHomeMap(){
 
 	// create map
-	homeMap = L.map('map', {editable: true}).setView([44.9716, -93.2429], 18);
+	homeMap = L.map('map', {editable: true}).setView([44.9716, -93.2429], 16);
 	
 	// create baselayer
 	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -20,6 +20,14 @@ function initializeHomeMap(){
 		icon: 'fa fa-map-marker',
 		iconLoading: 'fa fa-spinner fa-spin'
 	}).addTo(homeMap);
+	
+	var north = L.control({position: "topright"});
+	north.onAdd = function(map) {
+		var div = L.DomUtil.create("div", "info legend");
+		div.innerHTML = '<img src="images/north-arrow.png" width="50" height="50">';
+    return div;
+	}
+	north.addTo(homeMap);
 	
 	// load polygons from test-json
 	$.ajax({

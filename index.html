@@ -47,10 +47,10 @@
 		right : 0;
 		bottom : 0;
 		left : 0;
-		padding-left: 10px;
-		padding-right: 10px;
+		padding-left: 15px;
+		padding-right: 15px;
 		padding-top: 60px;
-		padding-bottom: 40px;
+		padding-bottom: 90px;
 	}
 	#simple-content{
 		padding-left: 10px;
@@ -67,7 +67,7 @@
 
 	<div data-role="page" id="home-page">
 	
-		<div data-role="header" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false">
+		<div data-role="header" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false" data-theme="b">
 			<h1>App-Name</h1>
 		</div>
 		
@@ -77,7 +77,7 @@
 			</div>
 		</div>
 		
-		<div data-role="footer" data-position="fixed" data-tap-toggle="false">
+		<div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="c">
 			<div data-role="navbar">
 				<ul>
 					<li><a href="#select-camera-page">Add a camera</a></li>
@@ -90,7 +90,8 @@
 	
 	<div data-role="page" id="select-camera-page">
 	
-		<div data-role="header" data-position="fixed">
+		<div data-role="header" data-position="fixed"data-tap-toggle="false" data-theme="b">
+		<a href="#home-page" data-role="button" data-icon="delete" data-theme="a">Back</a>
 			<h1>Step 1: Select a camera</h1>
 		</div>
 		
@@ -119,7 +120,7 @@
 			</ul>
 		</div>
 		
-		<div data-role="footer" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false">
+		<div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="c">
 			<div data-role="navbar">
 				<ul>
 					<li><a href="#select-camera-page" class="ui-btn-active ui-state-persist">Add a camera</a></li>
@@ -132,7 +133,7 @@
 	
 	<div data-role="page" id="navigate-page">
 	
-		<div data-role="header" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false">
+		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
 			<h1>Navigate</h1>
 		</div>
 		
@@ -144,7 +145,7 @@
 			</div>
 		</div>
 		
-		<div data-role="footer" data-position="fixed" data-tap-toggle="false">
+		<div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="c">
 			<div data-role="navbar">
 				<ul>
 					<li><a href="#select-camera-page">Add a camera</a></li>
@@ -157,10 +158,10 @@
 	
 	<div data-role="page" id="confirm-dome-camera-page">
 	
-		<div data-role="header" data-position="fixed">
+		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
+			<a href="#select-camera-page" data-role="button" data-icon="arrow-l" data-theme="a">Back</a>
 			<h1>Step 2: Confirm Details</h1>
-			<a href="#select-camera-page" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-arrow-l">Back</a>
-			<a href="#add-camera-map-page" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-check">Confirm</a>
+			<a href="#add-camera-map-page" data-role="button" data-icon="check" data-theme="a">Confirm</a>
 		</div>
 		
 		<div role="content" class="ui-content">
@@ -175,7 +176,7 @@
 			</div>
 		</div>
 		
-		<div data-role="footer" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false">
+		<div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="c">
 			<div data-role="navbar">
 				<ul>
 					<li><a href="#add-camera-page" class="ui-btn-active ui-state-persist">Add a camera</a></li>
@@ -188,10 +189,10 @@
 	
 	<div data-role="page" id="confirm-bullet-camera-page">
 	
-		<div data-role="header" data-position="fixed">
+		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
+			<a href="#select-camera-page" data-role="button" data-icon="arrow-l" data-theme="a">Back</a>
 			<h1>Step 2: Confirm Details</h1>
-			<a href="#select-camera-page" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-arrow-l">Back</a>
-			<a href="#add-camera-map-page" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-check">Confirm</a>
+			<a href="#add-camera-map-page" data-role="button" data-icon="check" data-theme="a">Confirm</a>
 		</div>
 		
 		<div role="content" class="ui-content">
@@ -206,7 +207,7 @@
 			</div>
 		</div>
 		
-		<div data-role="footer" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false">
+		<div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="c">
 			<div data-role="navbar">
 				<ul>
 					<li><a href="#add-camera-page" class="ui-btn-active ui-state-persist">Add a camera</a></li>
@@ -219,10 +220,10 @@
 	
 	<div data-role="page" id="confirm-mobile-camera-page">
 	
-		<div data-role="header" data-position="fixed">
+		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
+			<a href="#select-camera-page" data-role="button" data-icon="arrow-l" data-theme="a">Back</a>
 			<h1>Step 2: Confirm Details</h1>
-			<a href="#select-camera-page" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-arrow-l">Back</a>
-			<a href="#add-camera-map-page" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-check">Confirm</a>
+			<a href="#add-camera-map-page" data-role="button" data-icon="check" data-theme="a">Confirm</a>
 		</div>
 		
 		<div role="content" class="ui-content">
@@ -237,7 +238,7 @@
 			</div>
 		</div>
 		
-		<div data-role="footer" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false">
+		<div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="c">
 			<div data-role="navbar">
 				<ul>
 					<li><a href="#add-camera-page" class="ui-btn-active ui-state-persist">Add a camera</a></li>
@@ -250,9 +251,10 @@
 	
 	<div data-role="page" id="add-camera-map-page">
 	
-		<div data-role="header" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false">
+		<div data-role="header" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false" data-theme="b">
+			<a href="#home-page" data-icon="delete" data-role="button" data-theme="a">Cancel</a>
 			<h1>Step 3: Place Camera</h1>
-			<a href="#home-page" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-check">Confirm</a>
+			<a href="#home-page" data-icon="check" data-role="button" data-theme="a">Confirm</a>
 		</div>
 		
 		<div role="content" class="ui-content">
@@ -261,7 +263,7 @@
 			</div>
 		</div>
 		
-		<div data-role="footer" data-position="fixed" data-tap-toggle="false">
+		<div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="c">
 			<div data-role="navbar">
 				<ul>
 					<li><a href="#select-camera-page" class="ui-btn-active ui-state-persist">Add a camera</a></li>
