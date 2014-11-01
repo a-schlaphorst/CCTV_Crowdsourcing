@@ -43,7 +43,7 @@ function initializeHomeMap(){
 			// add polygons to map
 			addPolygonsToMap(data);
 		},
-		'error': function(jqXHR, textStatus, errorThrown) {alert('Error ' + errorThrown);}
+		'error': function(jqXHR, textStatus, errorThrown) {console.error('Error ' + errorThrown);}
 	});
 	
 	

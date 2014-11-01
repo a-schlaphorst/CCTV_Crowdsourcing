@@ -13,10 +13,6 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
 	
-	<!--leaflet drawing-->
-	<link rel='stylesheet' href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css'/>
-	<script type="text/javascript" src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js'></script>
-	
 	<!--basic locatecontrol-->
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"/>
 	<link rel="stylesheet" href="external/L.Control.Locate.css"/>
@@ -33,6 +29,9 @@
 	#home-page {
 		height: 100%;
 	}
+	#add-camera-map-page {
+		height: 100%;
+	}
 	#map{
 		height: 100%;
 		width: 100%;
@@ -47,10 +46,10 @@
 		right : 0;
 		bottom : 0;
 		left : 0;
-		padding-left: 15px;
-		padding-right: 15px;
-		padding-top: 60px;
-		padding-bottom: 90px;
+		margin-left: 0px;
+		margin-right: 0px;
+		margin-top: 44px;
+		margin-bottom: 114px;
 	}
 	#simple-content{
 		padding-left: 10px;
@@ -67,7 +66,7 @@
 
 	<div data-role="page" id="home-page">
 	
-		<div data-role="header" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false" data-theme="b">
+		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
 			<h1>App-Name</h1>
 		</div>
 		
@@ -166,9 +165,8 @@
 		
 		<div role="content" class="ui-content">
 			<div id="simple-content">
-			<!--	<label for="slider-height">Camera Height in feet:</label>
+				<label for="slider-height">Camera Height in feet:</label>
 				<input name="slider-height" id="slider-height" value="15" min="10" max="30" data-highlight="true" type="range">
-			-->
 			
 				<img src="images/dome.jpg" alt="Dome-Camera Image" class="center-image">
 				
@@ -197,13 +195,24 @@
 		
 		<div role="content" class="ui-content">
 			<div id="simple-content">
-			<!--	<label for="slider-height">Camera Height in feet:</label>
+				<label for="slider-height">Camera Height in feet:</label>
 				<input name="slider-height" id="slider-height" value="15" min="10" max="30" data-highlight="true" type="range">
-			-->
 			
 				<img src="images/bullet.jpg" alt="Bullet-Camera Image" class="center-image">
 				
-				<p>Some description text... based on height we will create a sample circle which can be edited in the next step</p>
+				<form>
+					<fieldset data-role="controlgroup" data-type="horizontal" id="angular-size">
+						<legend>Angular size of the cameras field of view:</legend>
+						<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="45" checked="checked">
+						<label for="radio-choice-h-2a">45&deg;</label>
+						<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="90">
+						<label for="radio-choice-h-2b">90&deg;</label>
+						<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2c" value="180">
+						<label for="radio-choice-h-2c">180&deg;</label>
+					</fieldset>
+				</form>
+				
+				<p>After confirming your settings, you are asked to choose the origin-location of your camera by clicking on the map. After that you have to orient your camera by clicking on the map again. We will compute a polygon based the line between the two locations which can still be edited.</p>
 			</div>
 		</div>
 		
@@ -228,9 +237,8 @@
 		
 		<div role="content" class="ui-content">
 			<div id="simple-content">
-			<!--	<label for="slider-height">Camera Height in feet:</label>
+				<label for="slider-height">Camera Height in feet:</label>
 				<input name="slider-height" id="slider-height" value="15" min="10" max="30" data-highlight="true" type="range">
-			-->
 			
 				<img src="images/mobile.jpg" alt="Mobile-Camera Image" class="center-image">
 				
@@ -272,6 +280,14 @@
 				</ul>
 			</div>
 		</div>
+	</div>
+	
+	<div data-role="popup" data-theme="a" id="drawOriginPopup">
+		<p>Please choose the location of your camera<p>
+	</div>
+	
+	<div data-role="popup" data-theme="a" id="drawBearingPopup">
+		<p>Orientate your camera by choosing another location<p>
 	</div>
 </body>
 </html>

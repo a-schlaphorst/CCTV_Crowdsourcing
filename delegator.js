@@ -3,6 +3,9 @@ This class delegates the site navigation
 */
 var cameraType;
 var viewingDistance;
+var angularSize;
+
+// ensures that only one polygon is drawn
 var drawEditable = true;
 
 $(document).delegate('.ui-page', 'pageshow', function() {
@@ -12,9 +15,13 @@ $(document).delegate('.ui-page', 'pageshow', function() {
 	} else if ($.mobile.activePage.attr('id') == 'confirm-dome-camera-page'){
 		cameraType = "dome";
 		
+	} else if ($.mobile.activePage.attr('id') == 'confirm-bullet-camera-page'){
+		cameraType = "bullet";
+		
 	} else if ($.mobile.activePage.attr('id') == 'add-camera-map-page'){
-		var value = $('#slider-height').val();
-		viewingDistance = (value * 3) / 1000
+		viewingDistance = ($('#slider-height').val() * 3) / 1000;		
+		angularSize = $('#angular-size :radio:checked').val();
+		
 		initializeAddCameraMap();
 	}
 });
