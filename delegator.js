@@ -13,14 +13,24 @@ $(document).delegate('.ui-page', 'pageshow', function() {
 		initializeHomeMap();
 		
 	} else if ($.mobile.activePage.attr('id') == 'confirm-dome-camera-page'){
+	
 		cameraType = "dome";
 		
 	} else if ($.mobile.activePage.attr('id') == 'confirm-bullet-camera-page'){
+	
 		cameraType = "bullet";
 		
 	} else if ($.mobile.activePage.attr('id') == 'add-camera-map-page'){
-		viewingDistance = ($('#slider-height').val() * 3) / 1000;		
-		angularSize = $('#angular-size :radio:checked').val();
+	
+		if(cameraType == "dome") {
+		
+			viewingDistance = $('#slider-floor-level-dome').val() / 100;
+			
+		} else if(cameraType == "bullet") {
+		
+			viewingDistance = $('#slider-floor-level-bullet').val() / 100;	
+			angularSize = $('#angular-size :radio:checked').val();
+		}
 		
 		initializeAddCameraMap();
 	}
