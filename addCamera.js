@@ -28,9 +28,14 @@ function initializeAddCameraMap(){
 		iconLoading: 'fa fa-spinner fa-spin'
 	}).addTo(addCameraMap);
 	
+	// create osm-geocoder-search
+	var osmGeocoder = new L.Control.OSMGeocoder();
+	addCameraMap.addControl(osmGeocoder);
+	
+	// add click listener
 	addCameraMap.on("click", onMapClick);
 	
-	
+	// call initial popup
 	$( "#drawOriginPopup" ).popup();
 	$( "#drawOriginPopup" ).popup( "open" );
 	setTimeout(function(){

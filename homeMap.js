@@ -21,6 +21,7 @@ function initializeHomeMap(){
 		iconLoading: 'fa fa-spinner fa-spin'
 	}).addTo(homeMap);
 	
+	// create north arrow
 	var north = L.control({position: "topright"});
 	north.onAdd = function(map) {
 		var div = L.DomUtil.create("div", "info legend");
@@ -28,6 +29,10 @@ function initializeHomeMap(){
     return div;
 	}
 	north.addTo(homeMap);
+	
+	// create osm-geocoder-search
+	var osmGeocoder = new L.Control.OSMGeocoder();
+	homeMap.addControl(osmGeocoder);
 	
 	// load polygons from test-json
 	$.ajax({
