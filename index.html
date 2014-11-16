@@ -176,6 +176,9 @@
 				<img src="images/dome.jpg" alt="Dome-Camera Image" class="center-image">
 				
 				<p>Some description text... based on height we will create a sample circle which can be edited in the next step. Maybe adding some kind of input for viewing angle?</p>
+				
+				<label for="dome-description">Please enter a description:</label>
+				<textarea name="dome-description" id="dome-description"></textarea>
 			</div>
 		</div>
 		
@@ -218,6 +221,8 @@
 				</form>
 				
 				<p>After confirming your settings, you are asked to choose the origin-location of your camera by clicking on the map. After that you have to orient your camera by clicking on the map again. We will compute a polygon based the line between the two locations which can still be edited.</p>
+				<label for="bullet-description">Please enter a description:</label>
+				<textarea name="bullet-description" id="bullet-description"></textarea>
 			</div>
 		</div>
 		
@@ -248,6 +253,8 @@
 				<img src="images/mobile.jpg" alt="Mobile-Camera Image" class="center-image">
 				
 				<p>Some description text... based on height we will create a sample circle which can be edited in the next step.</p>
+				<label for="mobile-description">Please enter a description:</label>
+				<textarea name="mobile-description" id="bullet-description"></textarea>
 			</div>
 		</div>
 		
@@ -267,7 +274,7 @@
 		<div data-role="header" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false" data-theme="b">
 			<a href="#home-page" data-icon="delete" data-role="button" data-theme="a">Cancel</a>
 			<h1>Step 3: Place Camera</h1>
-			<a href="#home-page" data-icon="check" data-role="button" data-theme="a">Confirm</a>
+			<a href="#home-page" data-icon="check" data-role="button" data-theme="a" onClick="insertCamera()">Confirm</a>
 		</div>
 		
 		<div role="content" class="ui-content">

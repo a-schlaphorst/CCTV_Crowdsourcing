@@ -34,24 +34,8 @@ function initializeHomeMap(){
 	var osmGeocoder = new L.Control.OSMGeocoder();
 	homeMap.addControl(osmGeocoder);
 	
-	// load polygons from test-json
-	$.ajax({
-		'async': true,
-		'url': 'examplePolygon.json',
-		'beforeSend': function(xhr){
-			if (xhr.overrideMimeType){
-				xhr.overrideMimeType("application/json");
-			}
-		},
-		'dataType': "json",
-		'success': function (data) {
-			// add polygons to map
-			addPolygonsToMap(data);
-		},
-		'error': function(jqXHR, textStatus, errorThrown) {console.error('Error ' + errorThrown);}
-	});
-	
-	
+	// load polygons from DB
+	// TODO
 }
 
 function addPolygonsToMap(json){

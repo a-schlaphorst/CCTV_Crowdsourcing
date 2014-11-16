@@ -7,6 +7,7 @@ var bulletDirection = false;
 var cameraLocation;
 
 var originMarker;
+var camerashape;
 
 
 /*****Functions*****/
@@ -58,16 +59,24 @@ function onMapClick(evt){
 
 function addEditablePolygon(startPoint, type, radius){
 	if(type === "dome"){
+	
 		var circleCoords = createFullCirclePolygon(startPoint, radius, 10);
-		var polygon = L.polygon(circleCoords).addTo(addCameraMap);
-		polygon.enableEdit();
+		cameraShape = L.polygon(circleCoords).addTo(addCameraMap);
+		cameraShape.enableEdit();
+		
+	} else if(type === "mobile"){
+	
+		var circleCoords = createFullCirclePolygon(startPoint, radius, 10);
+		cameraShape = L.polygon(circleCoords).addTo(addCameraMap);
+		cameraShape.enableEdit();
+		
 	} else if(type === "bullet"){
 		if(bulletDirection){
 			// draw polygon
 			var bearing = getBearing(cameraLocation, startPoint);
 			var circleExtractCoords = createCircleExtractPolygon(cameraLocation, bearing, angularSize, radius, Math.round(angularSize/36));
-			var circleExtract = L.polygon(circleExtractCoords).addTo(addCameraMap);
-			circleExtract.enableEdit();
+			cameraShape = L.polygon(circleExtractCoords).addTo(addCameraMap);
+			cameraShape.enableEdit();
 			addCameraMap.removeLayer(originMarker);
 		} else{
 			// save camera location
