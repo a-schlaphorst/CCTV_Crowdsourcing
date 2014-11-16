@@ -93,8 +93,26 @@ function addEditablePolygon(startPoint, type, radius){
 				$( "#drawBearingPopup" ).popup("close")
 			}, 2000);
 		}
+	}	
+}
+
+function insertCamera(){
+	if (window.XMLHttpRequest) {
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	} else { // code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 	}
-		
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			var cameras = JSON.parse(xmlhttp.responseText);
+			debugger;
+		}
+	}
+	
+	// TODO: Transform polygon to db schema?
+	xmlhttp.open("GET","newcamera.php?type=" + type + "&origin=" startPoint+ ,true);
+	xmlhttp.send();
 }
 
 /* Full-Circle coordinates given distance and amount of coordinates from start point
@@ -170,11 +188,17 @@ function getBearing(start, end){
 	return toDegrees(brng);
 }
 
+/*
+* Transform degree to radian
+*/
 function toRadians(degrees){
 	var radians = degrees * (pi / 180);
 	return radians;
 }
 
+/*
+* Transform radian to degree
+*/
 function toDegrees(radians){
 	var degrees = radians * (180 / pi);
 	return degrees;
