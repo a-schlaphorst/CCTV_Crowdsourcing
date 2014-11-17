@@ -1,6 +1,7 @@
 /*****Variables*****/
 
 var homeMap;
+var cameras = [];
 
 /*****Functions*****/
 
@@ -34,41 +35,60 @@ function initializeHomeMap(){
 	var osmGeocoder = new L.Control.OSMGeocoder();
 	homeMap.addControl(osmGeocoder);
 	
-	// load polygons from DB
-	// TODO
+	// load polygons from database
+	loadCamerasFromDB();
 }
 
-function addPolygonsToMap(json){
-	var cameras = json.cameras;
-	
-	for(var i = 0; i < cameras.length; i++){
-		var camera = cameras[i];
+function loadCamerasFromDB(){
+	if (window.XMLHttpRequest) {
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	} else { // code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			var results = JSON.parse(xmlhttp.responseText);
 		
-		// coordinates can be single point or array of polygon-corners
-		var coordinates = camera.coordinates;
-	
-		// check if camera is polygon
-		if(camera.type === "Polygon"){
-		
-			var coordinates = camera.coordinates;
-			
-			// convert lnglat(GeoJSON-format) to latlng(leaflet-format)
-			var latlng = new Array();
-			for(var j = 0; j < coordinates.length; j++){
-				latlng.push(L.latLng(coordinates[j][1],coordinates[j][0]));
+			for(var i = 0; i < results.features.length; i++){
+				camera = results.features[i];
+				var coordinates = invertCoords(camera.geometry.coordinates[0]);
+				for(var j = 0; j < coordinates.length; j++){
+					var properties = camera.properties;
+					var polygon = L.polygon(coordinates);
+					var container = $('<div>');
+					
+					container.html('<table>' + 
+						'<tr><td><b>Description</b></td><td>' + properties.description + '</td></tr>' +
+						'<tr><td><b>Latitude</b></td><td>' + coordinates[j].lat + '</td></tr>' +
+						'<tr><td><b>Longitude</b></td><td>' + coordinates[j].lng + '</td></tr>' +					
+						'<tr><td><b>Camera-ID</b></td><td>'  + properties.cameraid + '</td></tr>' +
+						'<tr><td><b>Type</b></td><td>' + properties.type + '</td></tr>' +
+						'<tr><td><b>Orientation</b></td><td>' + properties.orientation + '</td></tr>' +
+						'<tr><td><a href="#" id="writeComment" class="link">Comments</a></td></tr></table></div>');
+
+					// Insert the container into the popup
+					polygon.bindPopup(container[0]);
+					cameras.push(polygon);
+				}
 			}
-			
-			// TODO: save/cache global?
-			var polygon = L.polygon(latlng);
-			polygon.addTo(homeMap);
-		}
-		
-		// check if camera is circle
-		if(camera.type === "Circle"){
-			var radius = camera.radius;
-			// create leaflet circle (convert coordinate-format)
-			var circle = L.circle(L.latLng(coordinates[1], coordinates[0]), radius);
-			circle.addTo(homeMap);
+			//TODO add polygons to map
+			for(var k = 0; k < cameras.length; k++){
+				cameras[k].addTo(homeMap);
+			}
 		}
 	}
+	xmlhttp.open("GET","getjson.php",true);
+	xmlhttp.send();
+}
+
+/*
+Convert array of coordinates (longitude,latitude) to leaflet.Latlng
+*/
+function invertCoords(coordinates){
+	var latlng = new Array();
+	for(var j = 0; j < coordinates.length; j++){
+		latlng.push(L.latLng(coordinates[j][1],coordinates[j][0]));
+	}
+	return latlng;
 }
