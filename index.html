@@ -29,6 +29,7 @@
 	<script src="delegator.js"></script>
 	<script src="homeMap.js"></script>
 	<script src="addCamera.js"></script>
+	<script src="comments.js"></script>
 	
 	<style>
 	#home-page {
@@ -64,6 +65,15 @@
 		height:150px;
 		margin-left: auto;
 		margin-right: auto;
+	}
+	.comment {
+		padding-left: 5px;
+		padding-right: 5px;
+		border-radius: 10px;
+		background-color: #fff;
+	}
+	.description {
+		padding-bottom: 5px;
 	}
 	</style>
 </head>
@@ -287,6 +297,42 @@
 			<div data-role="navbar">
 				<ul>
 					<li><a href="#select-camera-page" class="ui-btn-active ui-state-persist" data-icon="plus">Add a camera</a></li>
+					<li><a href="#home-page" data-icon="home">Map</a></li>
+					<li><a href="#navigate-page" data-icon="grid">Navigate</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div data-role="page" id="camera-comments-page">
+	
+		<div data-role="header" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false" data-theme="b">
+			<a href="#home-page" data-icon="delete" data-role="button" data-theme="a">Back</a>
+			<h1>Comments</h1>
+		</div>
+		
+		<div role="content" class="ui-content" id="simple-content" style="padding-top: 50px">
+			<div data-role="collapsible" data-theme="a" data-collapsed-icon="plus" data-expanded-icon="arrow-up">
+				<!-- Input New Comment -->
+				<h2>Add a Comment</h2>
+				<i><h2 id="marker-detail-name"></h2></i>
+				<br>
+				<form>
+					<label for="textarea">Please enter your text here:</label>
+					<textarea cols="40" rows="20" name="textarea" id="comment-text" value="" placeholder="Text"></textarea>			
+				</form>
+				<br>
+				<button type="submit" data-theme="a" data-icon="check" id="submit-comment">Submit</button>
+			</div>
+			<div id="comments_container">
+				<p> No comments yet...</p>
+			</div>
+		</div>
+		
+		<div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="c">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#select-camera-page" data-icon="plus">Add a camera</a></li>
 					<li><a href="#home-page" data-icon="home">Map</a></li>
 					<li><a href="#navigate-page" data-icon="grid">Navigate</a></li>
 				</ul>

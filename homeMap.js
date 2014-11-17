@@ -58,6 +58,11 @@ function loadCamerasFromDB(){
 					var polygon = L.polygon(coordinates);
 					var container = $('<div>');
 					
+					container.on('click', '#seeComments', function() {
+						selectedCameraId = properties.cameraid;
+						fillCommentsPage(selectedCameraId);
+					});
+					
 					container.html('<table>' + 
 						'<tr><td><b>Description</b></td><td>' + properties.description + '</td></tr>' +
 						'<tr><td><b>Latitude</b></td><td>' + coordinates[j].lat + '</td></tr>' +
@@ -65,7 +70,7 @@ function loadCamerasFromDB(){
 						'<tr><td><b>Camera-ID</b></td><td>'  + properties.cameraid + '</td></tr>' +
 						'<tr><td><b>Type</b></td><td>' + properties.type + '</td></tr>' +
 						'<tr><td><b>Orientation</b></td><td>' + properties.orientation + '</td></tr>' +
-						'<tr><td><a href="#" id="writeComment" class="link">Comments</a></td></tr></table></div>');
+						'<tr><td><a href="#camera-comments-page" id="seeComments" class="link">Comments</a></td></tr></table></div>');
 
 					// Insert the container into the popup
 					polygon.bindPopup(container[0]);
@@ -78,7 +83,7 @@ function loadCamerasFromDB(){
 			}
 		}
 	}
-	xmlhttp.open("GET","getjson.php",true);
+	xmlhttp.open("GET","getcameras.php",true);
 	xmlhttp.send();
 }
 

@@ -5,6 +5,7 @@ var cameraType;
 var viewingDistance;
 var angularSize;
 var description;
+var selectedCameraId;
 
 // ensures that only one polygon is drawn
 var drawEditable = true;
