@@ -52,10 +52,10 @@ function loadCamerasFromDB(){
 		
 			for(var i = 0; i < results.features.length; i++){
 				camera = results.features[i];
-				var coordinates = invertCoords(camera.geometry.coordinates[0]);
+				var coordinates = convertCoordsToLeaflet(camera.geometry.coordinates[0]);
 				for(var j = 0; j < coordinates.length; j++){
 					var properties = camera.properties;
-					var polygon = L.polygon(coordinates);
+					var polygon = L.polygon(coordinates, {color: getCameraColor(properties.type)});
 					var container = $('<div>');
 					
 					container.on('click', '#seeComments', function() {
@@ -68,7 +68,7 @@ function loadCamerasFromDB(){
 						'<tr><td><b>Latitude</b></td><td>' + coordinates[j].lat + '</td></tr>' +
 						'<tr><td><b>Longitude</b></td><td>' + coordinates[j].lng + '</td></tr>' +					
 						'<tr><td><b>Camera-ID</b></td><td>'  + properties.cameraid + '</td></tr>' +
-						'<tr><td><b>Type</b></td><td>' + properties.type + '</td></tr>' +
+						'<tr><td><b>Type</b></td><td>' + getCameraTypeString(properties.type) + '</td></tr>' +
 						'<tr><td><b>Orientation</b></td><td>' + properties.orientation + '</td></tr>' +
 						'<tr><td><a href="#camera-comments-page" id="seeComments" class="link">Comments</a></td></tr></table></div>');
 
@@ -85,15 +85,4 @@ function loadCamerasFromDB(){
 	}
 	xmlhttp.open("GET","getcameras.php",true);
 	xmlhttp.send();
-}
-
-/*
-Convert array of coordinates (longitude,latitude) to leaflet.Latlng
-*/
-function invertCoords(coordinates){
-	var latlng = new Array();
-	for(var j = 0; j < coordinates.length; j++){
-		latlng.push(L.latLng(coordinates[j][1],coordinates[j][0]));
-	}
-	return latlng;
 }

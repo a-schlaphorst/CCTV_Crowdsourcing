@@ -57,30 +57,32 @@ function onMapClick(evt){
 	addEditablePolygon(evt.latlng, cameraType, viewingDistance);
 };
 
-function addEditablePolygon(startPoint, type, radius){
+function addEditablePolygon(clickLocation, type, radius){
 	if(type === "dome"){
 	
-		var circleCoords = createFullCirclePolygon(startPoint, radius, 10);
+		var circleCoords = createFullCirclePolygon(clickLocation, radius, 10);
+		cameraLocation = clickLocation;
 		cameraShape = L.polygon(circleCoords).addTo(addCameraMap);
 		cameraShape.enableEdit();
 		
 	} else if(type === "mobile"){
 	
-		var circleCoords = createFullCirclePolygon(startPoint, radius, 10);
+		var circleCoords = createFullCirclePolygon(clickLocation, radius, 10);
+		cameraLocation = clickLocation;
 		cameraShape = L.polygon(circleCoords).addTo(addCameraMap);
 		cameraShape.enableEdit();
 		
 	} else if(type === "bullet"){
 		if(bulletDirection){
 			// draw polygon
-			var bearing = getBearing(cameraLocation, startPoint);
+			var bearing = getBearing(cameraLocation, clickLocation);
 			var circleExtractCoords = createCircleExtractPolygon(cameraLocation, bearing, angularSize, radius, Math.round(angularSize/36));
 			cameraShape = L.polygon(circleExtractCoords).addTo(addCameraMap);
 			cameraShape.enableEdit();
 			addCameraMap.removeLayer(originMarker);
 		} else{
 			// save camera location
-			cameraLocation = startPoint;
+			cameraLocation = clickLocation;
 			// draw marker for orientation
 			originMarker = L.marker(cameraLocation).addTo(addCameraMap);
 			// enable again for second click
@@ -96,7 +98,21 @@ function addEditablePolygon(startPoint, type, radius){
 	}	
 }
 
-function insertCamera(){
+function confirmCamera(){
+	if(!cameraShape){
+		return;
+	}
+	
+	cameraShape.disableEdit();
+	
+	// get attributes
+	var cameraDescription = description;
+	var selectedCameraType = getCameraTypeId(cameraType);
+	var time = getTimestamp();
+	var centroid = convertLeafletLocationToString(cameraLocation);
+	var coordinates = convertLeafletCoordsToString(cameraShape.getLatLngs());
+	
+	// send request
 	if (window.XMLHttpRequest) {
 		// code for IE7+, Firefox, Chrome, Opera, Safari
 		xmlhttp=new XMLHttpRequest();
@@ -105,101 +121,16 @@ function insertCamera(){
 	}
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			var cameras = JSON.parse(xmlhttp.responseText);
-			debugger;
+			alert(xmlhttp.responseText);
 		}
 	}
-	
-	// TODO: Transform polygon to db schema?
-	xmlhttp.open("GET","newcamera.php?type=" + type + "&origin=" startPoint+ ,true);
+	xmlhttp.open("GET","postcamera.php?type=" + selectedCameraType + 
+		"&height=" + cameraHeight + 
+		"&confirmtimes=0" + 
+		"&confidence=100" + 
+		"&description=" + cameraDescription + 
+		"&time=" + time + 
+		"&centroid=" + centroid + 
+		"&shape=" + coordinates,true);
 	xmlhttp.send();
-}
-
-/* Full-Circle coordinates given distance and amount of coordinates from start point
-*
-* startPoint (coordinates from start point)
-* radius (radius of ring)
-* n (amount of coordinates)
-* return (array of coordinates)
-*/
-function createFullCirclePolygon(startPoint, radius, n){
-	var coords = [];
-	for(var i = 0; i < n; i++){
-		coords.push(getBearingCoordinates(startPoint, i * (360 / n), radius));
-	}
-	
-	return coords;
-}
-
-/* Circle-Extract coordinates given distance, angularSize, bearing and amount of coordinates from start point
-*
-* startPoint (coordinates from start point)
-* bearing (direction of circle-extract from origin)
-* angularSize (extract size)
-* radius (radius of ring)
-* n (amount of coordinates)
-* return (array of coordinates)
-*/
-function createCircleExtractPolygon(startPoint, bearing, angularSize, radius, n){
-	if(n < 2){
-		n = 2;
-	}
-	var coords = [];
-	coords.push(startPoint);
-	for(var i = 0; i < n + 1; i++){
-		coords.push(getBearingCoordinates(startPoint, bearing - (angularSize / 2) + (i * (angularSize / n)), radius));
-	}
-	coords.push(startPoint);
-	
-	return coords;
-}
-
-/*
-* Destination point given distance and bearing from start point
-*
-* Given a start point, initial bearing, and distance, 
-* this will calculate the destination point and final bearing travelling along a (shortest distance) great circle arc.
-* startPoint (coordinates of start Location)
-* bearing (bearing clockwise from north)
-* distance (distance travelled)
-*/
-function getBearingCoordinates(startPoint, bearing, distance){
-
-	var startLat = toRadians(startPoint.lat);
-	var startLng = toRadians(startPoint.lng);
-	var bearing = toRadians(bearing);
-
-	var destLat = Math.asin( Math.sin(startLat)*Math.cos(distance/R) + Math.cos(startLat)*Math.sin(distance/R)*Math.cos(bearing));
-	var destLng = startLng + Math.atan2(Math.sin(bearing)*Math.sin(distance/R)*Math.cos(startLat), Math.cos(distance/R)-Math.sin(startLat)*Math.sin(destLat));
-
-	return L.latLng(toDegrees(destLat), toDegrees(destLng));
-}
-
-function getBearing(start, end){
-	var startLat = toRadians(start.lat);
-	var startLng = toRadians(start.lng);
-	var endLat = toRadians(end.lat)
-	var endLng = toRadians(end.lng)
-	
-	var y = Math.sin(endLng-startLng) * Math.cos(endLat);
-	var x = Math.cos(startLat)*Math.sin(endLat) -Math.sin(startLat)*Math.cos(endLat)*Math.cos(endLng-startLng);
-	var brng = Math.atan2(y, x);
-	
-	return toDegrees(brng);
-}
-
-/*
-* Transform degree to radian
-*/
-function toRadians(degrees){
-	var radians = degrees * (pi / 180);
-	return radians;
-}
-
-/*
-* Transform radian to degree
-*/
-function toDegrees(radians){
-	var degrees = radians * (180 / pi);
-	return degrees;
 }

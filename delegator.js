@@ -2,6 +2,7 @@
 This class delegates the site navigation
 */
 var cameraType;
+var cameraHeight;
 var viewingDistance;
 var angularSize;
 var description;
@@ -30,20 +31,21 @@ $(document).delegate('.ui-page', 'pageshow', function() {
 	
 		if(cameraType == "dome") {
 		
-			viewingDistance = $('#slider-floor-level-dome').val() / 100;
+			cameraHeight = $('#slider-floor-level-dome').val();
 			description = $('#dome-description').val();
 			
 		} else if(cameraType == "bullet") {
 		
-			viewingDistance = $('#slider-floor-level-bullet').val() / 100;	
+			cameraHeight = $('#slider-floor-level-bullet').val();
 			angularSize = $('#angular-size :radio:checked').val();
 			description = $('#bullet-description').val();
 			
 		} else if(cameraType == "mobile") {
 		
-			viewingDistance = $('#slider-floor-level-mobile').val() / 100;
+			cameraHeight = $('#slider-floor-level-mobile').val();
 			description = $('#mobile-description').val();
 		}
+		viewingDistance = cameraHeight / 100;	
 		initializeAddCameraMap();
 	}
 });

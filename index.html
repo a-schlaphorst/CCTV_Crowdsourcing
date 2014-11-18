@@ -30,6 +30,8 @@
 	<script src="homeMap.js"></script>
 	<script src="addCamera.js"></script>
 	<script src="comments.js"></script>
+	<script src="helperFunctions.js"></script>
+	<script src="geometryFunctions.js"></script>
 	
 	<style>
 	#home-page {
@@ -284,7 +286,7 @@
 		<div data-role="header" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false" data-theme="b">
 			<a href="#home-page" data-icon="delete" data-role="button" data-theme="a">Cancel</a>
 			<h1>Step 3: Place Camera</h1>
-			<a href="#home-page" data-icon="check" data-role="button" data-theme="a" onClick="insertCamera()">Confirm</a>
+			<a href="#" data-icon="check" data-role="button" data-theme="a" onClick="confirmCamera()">Confirm</a>
 		</div>
 		
 		<div role="content" class="ui-content">
@@ -322,7 +324,7 @@
 					<textarea cols="40" rows="20" name="textarea" id="comment-text" value="" placeholder="Text"></textarea>			
 				</form>
 				<br>
-				<button type="submit" data-theme="a" data-icon="check" id="submit-comment">Submit</button>
+				<button type="submit" data-theme="a" data-icon="check" id="submit-comment" onClick="addComment()">Submit</button>
 			</div>
 			<div id="comments_container">
 				<p> No comments yet...</p>
@@ -347,5 +349,6 @@
 	<div data-role="popup" data-theme="a" id="drawBearingPopup">
 		<p>Orientate your camera by choosing another location<p>
 	</div>
+</div>
 </body>
 </html>
