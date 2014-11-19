@@ -11,9 +11,11 @@ function fillCommentsPage(id){
 			
 			var resultDiv = $("<div id='comments_container'>");
 			var comments = results.features;
+			// reverse comments, so that last one is displayed on top
+			comments.reverse();
 			
 			for(var i = 0; i < comments.length; i++){
-				var comment = comments[i].properties.comments
+				var comment = comments[i].properties.comment
 				var div = $("<div class='comment'>");
 				div.append("<p class=\"description\">" + comment + "</p>");
 				div.append("</div>");
@@ -26,12 +28,13 @@ function fillCommentsPage(id){
 		}
 	}
 	
-	xmlhttp.open("GET","getcomments.php?cameraid=" + id,true);
+	xmlhttp.open("GET","getcomments.php?camid=" + id,true);
 	xmlhttp.send();
 }
 
 function addComment(){
-	if(!selectedCameraId){
+	// Do not add comment if no camera is selected or comment is empty
+	if(!selectedCameraId || $('#comment-text').val() == ""){
 		return;
 	}
 	
@@ -46,9 +49,15 @@ function addComment(){
 	}
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			alert(xmlhttp.responseText);
+			$('#comment-text').val("");
+			fillCommentsPage(commentCamera);
+			$( "#commentRegisteredPopup" ).popup();
+			$( "#commentRegisteredPopup" ).popup( "open" );
+			setTimeout(function(){
+				$( "#commentRegisteredPopup" ).popup("close")
+			}, 2000);
 		}
 	}
-	xmlhttp.open("GET","postcomment.php?cameraid=" + commentCamera + "&comment=" + comment,true);
+	xmlhttp.open("GET","postcomment.php?camid=" + commentCamera + "&comment=" + comment,true);
 	xmlhttp.send();
 }

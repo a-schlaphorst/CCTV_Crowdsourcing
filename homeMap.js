@@ -6,6 +6,10 @@ var cameras = [];
 /*****Functions*****/
 
 function initializeHomeMap(){
+	// If map is already initialized => do nothing
+	if(homeMap){
+		return;
+	}
 
 	// create map
 	homeMap = L.map('map', {editable: true}).setView([44.9716, -93.2429], 16);
@@ -40,14 +44,23 @@ function initializeHomeMap(){
 }
 
 function loadCamerasFromDB(){
+	// Delete old camera from map
+	if(cameras){
+		for(var i = 0; i < cameras.length; i++){
+			homeMap.removeLayer(cameras[i]);
+		}
+		camera = [];
+	}
+		
+	// Send DB request
 	if (window.XMLHttpRequest) {
 		// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
+		xmlhttp = new XMLHttpRequest();
 	} else { // code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 	}
-	xmlhttp.onreadystatechange=function() {
-		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			var results = JSON.parse(xmlhttp.responseText);
 		
 			for(var i = 0; i < results.features.length; i++){
@@ -59,18 +72,45 @@ function loadCamerasFromDB(){
 					var container = $('<div>');
 					
 					container.on('click', '#seeComments', function() {
-						selectedCameraId = properties.cameraid;
+						selectedCameraId = properties.id;
 						fillCommentsPage(selectedCameraId);
+					});
+					
+					container.on('click', '#confirmCamera', function() {
+						// register vote on db
+						if (window.XMLHttpRequest) {
+						// code for IE7+, Firefox, Chrome, Opera, Safari
+							xmlhttp = new XMLHttpRequest();
+						} else { // code for IE6, IE5
+							xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+						}
+						xmlhttp.onreadystatechange=function() {
+							if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+								// show pop up
+								$( "#confirmationRegisteredPopup" ).popup();
+								$( "#confirmationRegisteredPopup" ).popup( "open" );
+								setTimeout(function(){
+									$( "#confirmationRegisteredPopup" ).popup("close")
+								}, 2000);
+						
+								// reload cams on map
+								loadCamerasFromDB();
+							}
+						}
+	
+						xmlhttp.open("GET","postconfirmation.php?id=" + properties.id + "&confirmtimes=" + properties.confirmtimes,true);
+						xmlhttp.send();
 					});
 					
 					container.html('<table>' + 
 						'<tr><td><b>Description</b></td><td>' + properties.description + '</td></tr>' +
 						'<tr><td><b>Latitude</b></td><td>' + coordinates[j].lat + '</td></tr>' +
 						'<tr><td><b>Longitude</b></td><td>' + coordinates[j].lng + '</td></tr>' +					
-						'<tr><td><b>Camera-ID</b></td><td>'  + properties.cameraid + '</td></tr>' +
+						'<tr><td><b>Camera-ID</b></td><td>'  + properties.id + '</td></tr>' +
 						'<tr><td><b>Type</b></td><td>' + getCameraTypeString(properties.type) + '</td></tr>' +
-						'<tr><td><b>Orientation</b></td><td>' + properties.orientation + '</td></tr>' +
-						'<tr><td><a href="#camera-comments-page" id="seeComments" class="link">Comments</a></td></tr></table></div>');
+						'<tr><td><b>Confirmations</b></td><td>' + properties.confirmtimes + '</td></tr>' +
+						'<tr><td><a href="#camera-comments-page" id="seeComments" class="link">Comments</a></td>' +
+						'<td><a href="#" id="confirmCamera" class="link">Confirm</a></td></tr></table></div>');
 
 					// Insert the container into the popup
 					polygon.bindPopup(container[0]);
