@@ -6,8 +6,10 @@ var cameras = [];
 /*****Functions*****/
 
 function initializeHomeMap(){
-	// If map is already initialized => do nothing
+	// If map is already initialized => only refresh polygons
 	if(homeMap){
+		// load polygons from database
+		loadCamerasFromDB();
 		return;
 	}
 
@@ -63,12 +65,11 @@ function loadCamerasFromDB(){
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			var results = JSON.parse(xmlhttp.responseText);
 		
-			for(var i = 0; i < results.features.length; i++){
-				camera = results.features[i];
+			$.each(results.features, function(i, camera){
 				var coordinates = convertCoordsToLeaflet(camera.geometry.coordinates[0]);
 				for(var j = 0; j < coordinates.length; j++){
 					var properties = camera.properties;
-					var polygon = L.polygon(coordinates, {color: getCameraColor(properties.type)});
+					var polygon = L.polygon(coordinates, {color: getCameraColor(properties.type), fillOpacity: 0.1, opacity: 0.1, lineJoin: "round"});
 					var container = $('<div>');
 					
 					container.on('click', '#seeComments', function() {
@@ -116,7 +117,7 @@ function loadCamerasFromDB(){
 					polygon.bindPopup(container[0]);
 					cameras.push(polygon);
 				}
-			}
+			});
 			//TODO add polygons to map
 			for(var k = 0; k < cameras.length; k++){
 				cameras[k].addTo(homeMap);

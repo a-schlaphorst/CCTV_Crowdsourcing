@@ -20,12 +20,14 @@ function convertLeafletCoordsToString(coordinates){
 		}
 		coords = coords + coordinates[j].lng + " " + coordinates[j].lat;
 	}
-	coords = coords + "))',4326"
+	// first coordinate again (required by DB!)
+	coords = coords + ", " + coordinates[0].lng + " " + coordinates[0].lat;
+	coords = coords + "))'"
 	return coords;
 }
 
 function convertLeafletLocationToString(location){
-	var coord = "'POINT((" + location.lng + " " + location.lat + ")', 4326)";
+	var coord = "'POINT(" + location.lng + " " + location.lat + ")'";
 	return coord;
 }
 
@@ -59,13 +61,13 @@ function getCameraTypeId(string){
 
 function getCameraColor(type){
 	if(type == 1){
-		return "#FF0000";
+		return "#FF5E5E";
 	} 
 	else if(type == 2){
-		return "#FFFB00";
+		return "#FFF25E";
 	} 
 	else if(type == 3){
-		return "#0004FF";
+		return "#5E61FF";
 	} else {
 		return "A8A8A8"
 	}

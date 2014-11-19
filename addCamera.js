@@ -108,28 +108,24 @@ function confirmCamera(){
 	// get attributes
 	var cameraDescription = description;
 	var selectedCameraType = getCameraTypeId(cameraType);
-	var time = getTimestamp();
 	var centroid = convertLeafletLocationToString(cameraLocation);
 	var coordinates = convertLeafletCoordsToString(cameraShape.getLatLngs());
 	
 	// send request
 	if (window.XMLHttpRequest) {
 		// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
+		xmlhttp = new XMLHttpRequest();
 	} else { // code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 	}
-	xmlhttp.onreadystatechange=function() {
-		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			alert(xmlhttp.responseText);
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			$.mobile.changePage( "#home-page", { transition: "slideup", changeHash: false });
 		}
 	}
 	xmlhttp.open("GET","postcamera.php?type=" + selectedCameraType + 
 		"&height=" + cameraHeight + 
-		"&confirmtimes=0" + 
-		"&confidence=100" + 
-		"&description=" + cameraDescription + 
-		"&time=" + time + 
+		"&description=" + cameraDescription +
 		"&centroid=" + centroid + 
 		"&shape=" + coordinates,true);
 	xmlhttp.send();
