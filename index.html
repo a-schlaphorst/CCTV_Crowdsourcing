@@ -155,9 +155,20 @@
 		
 		<div role="content" class="ui-content">
 			<div class="simple-content">
-				
-				<p>This crazy feature is unfortunately not yet available</p>
-				<img src="images/mobile.jpg" class="center-image">
+				<form>
+					<fieldset data-role="controlgroup" data-type="horizontal" id="angular-size">
+						<legend>What type of route are you looking for?</legend>
+						<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="45" checked="checked">
+						<label for="radio-choice-h-2a">High Surveillance</label>
+						<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="90">
+						<label for="radio-choice-h-2b">Low Surveillance</label>
+					</fieldset>
+				</form>
+				<label for="start-text-field">Start</label>
+				<input type="text" data-clear-btn="true" name="start-text-field" id="start-text-field" value="">
+				<label for="destination-text-field">Destination</label>
+				<input type="text" data-clear-btn="true" name="destination-text-field" id="destination-text-field" value="">
+				<a href="#" class="ui-btn ui-btn-b ui-btn-icon-left ui-icon-search ui-corner-all ui-shadow">Create Route</a>
 			</div>
 		</div>
 		
