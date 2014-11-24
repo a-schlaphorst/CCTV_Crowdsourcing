@@ -1,6 +1,7 @@
 /*****Variables*****/
 
 var homeMap;
+var positionCircle;
 var cameras = [];
 
 /*****Functions*****/
@@ -22,11 +23,8 @@ function initializeHomeMap(){
 		maxZoom: 18
 	}).addTo(homeMap);
 	
-	// create locateme button
-	L.control.locate({
-		icon: 'fa fa-map-marker',
-		iconLoading: 'fa fa-spinner fa-spin'
-	}).addTo(homeMap);
+	homeMap.locate({watch: true});
+	homeMap.on('locationfound', onLocationFound);
 	
 	// create north arrow
 	var north = L.control({position: "topright"});
@@ -154,4 +152,23 @@ function resetFilters(){
 	$('input:radio[name="date-option"]').filter('[value="any"]').parent().find("label[for].ui-btn").click()
 	$('#date-filter').val("");
 	loadCamerasFromDB();
+}
+
+function onLocationFound(location) {
+	locationCoordinates = location.latlng;
+	var radius = location.accuracy / 2;
+	if(positionCircle){
+		homeMap.removeLayer(positionCircle);
+	}
+    positionCircle = L.circle(locationCoordinates, radius, {color: "#8A8A8A"});
+	positionCircle.addTo(homeMap);
+	homeMap.panTo(locationCoordinates);
+	
+	$('#home-page-header').css({"background":"#40C740"});
+	for(var i = 0; i < cameras.length; i++){
+		var camera = cameras[i];
+		if(camera.getBounds().contains(locationCoordinates)){
+			$('#home-page-header').css({"background":"#FF4747"});
+		}
+	}
 }
