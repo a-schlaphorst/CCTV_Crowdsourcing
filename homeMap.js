@@ -51,8 +51,11 @@ function loadCamerasFromDB(){
 		for(var i = 0; i < cameras.length; i++){
 			homeMap.removeLayer(cameras[i]);
 		}
-		camera = [];
+		cameras = [];
 	}
+	
+	// Get filter parameter
+	var filterParams = getFilterParams();
 		
 	// Send DB request
 	if (window.XMLHttpRequest) {
@@ -85,7 +88,7 @@ function loadCamerasFromDB(){
 						} else { // code for IE6, IE5
 							xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 						}
-						xmlhttp.onreadystatechange=function() {
+						xmlhttp.onreadystatechange = function() {
 							if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 								// show pop up
 								$( "#confirmationRegisteredPopup" ).popup();
@@ -124,6 +127,31 @@ function loadCamerasFromDB(){
 			}
 		}
 	}
-	xmlhttp.open("GET","getcameras.php",true);
+	xmlhttp.open("GET","getcameras.php?dome=" + filterParams.dome +
+		"&bullet=" + filterParams.bullet +
+		"&mobile=" + filterParams.mobile + 
+		"&threshold=" + filterParams.threshold +
+		"&date=" + filterParams.date,
+		true
+	);
 	xmlhttp.send();
+}
+
+function getFilterParams(){
+	return {
+		"dome": $('#dome-flipswitch').val(),
+		"bullet": $('#bullet-flipswitch').val(),
+		"mobile": $('#mobile-flipswitch').val(),
+		"threshold": $('#time-threshold :radio:checked').val(),
+		"date": $('#date-filter').val()
+	}
+}
+
+function resetFilters(){
+	$('#dome-flipswitch').val("on").slider("refresh");;
+	$('#bullet-flipswitch').val("on").slider("refresh");;
+	$('#mobile-flipswitch').val("on").slider("refresh");;
+	$('input:radio[name="date-option"]').filter('[value="any"]').parent().find("label[for].ui-btn").click()
+	$('#date-filter').val("");
+	loadCamerasFromDB();
 }

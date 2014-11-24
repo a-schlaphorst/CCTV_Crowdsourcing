@@ -13,6 +13,11 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
 	
+	<!--jQuery Calendar-->
+	<link rel="stylesheet" type="text/css" href="http://cdn.jtsage.com/datebox/latest/jqm-datebox.min.css">
+	<script type="text/javascript" src="http://cdn.jtsage.com/datebox/latest/jqm-datebox.core.min.js"></script>
+	<script type="text/javascript" src="http://dev.jtsage.com/cdn/datebox/latest/jqm-datebox.mode.calbox.min.js"></script>
+	
 	<!--basic locatecontrol-->
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"/>
 	<link rel="stylesheet" href="external/L.Control.Locate.css"/>
@@ -84,6 +89,7 @@
 	<div data-role="page" id="home-page">
 	
 		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
+			<a href="#filter-panel" data-role="button" data-icon="gear" data-theme="a">Filter</a>
 			<h1>App-Name</h1>
 		</div>
 		
@@ -91,6 +97,45 @@
 			<div data-role="listview" id="map-panel">
 				<div id="map"></div>
 			</div>
+		</div>
+		
+		<div data-role="panel" data-display="overlay" id="filter-panel">
+			<p>Please select the camera types which should be visible:</p>
+			<form>
+				<div class="ui-field-contain">
+					<label for="dome-flipswitch">Dome</label>
+					<select name="dome-flipswitch" id="dome-flipswitch" data-role="slider" data-mini="true">
+						<option value="off">Off</option>
+						<option value="on" selected="">On</option>
+					</select>
+				</div>
+				<div class="ui-field-contain">
+					<label for="bullet-flipswitch">Bullet</label>
+					<select name="bullet-flipswitch" id="bullet-flipswitch" data-role="slider" data-mini="true">
+						<option value="off">Off</option>
+						<option value="on" selected="">On</option>
+					</select>
+				</div>
+				<div class="ui-field-contain">
+					<label for="dome-flipswitch">Mobile</label>
+					<select name="mobile-flipswitch" id="mobile-flipswitch" data-role="slider" data-mini="true">
+						<option value="off">Off</option>
+						<option value="on" selected="">On</option>
+					</select>
+				</div>
+				<fieldset data-role="controlgroup" id="time-threshold" data-mini="true">
+					<legend>Displayed cameras that should have been submitted</legend>
+					<input type="radio" name="date-option" id="any-date-option" value="any" checked="checked">
+					<label for="any-date-option">Anytime</label>
+					<input type="radio" name="date-option" id="before-date-option" value="before">
+					<label for="before-date-option">Before</label>
+					<input type="radio" name="date-option" id="after-date-option" value="after">
+					<label for="after-date-option">After</label>
+				</fieldset>
+				<input type="text" id="date-filter" data-role="datebox" data-options='{"mode":"calbox"}'>
+				<a href="#" onClick="loadCamerasFromDB()" class="ui-btn ui-btn-icon-left ui-icon-refresh ui-corner-all ui-shadow ui-mini">Update Map</a>
+				<a href="#" onClick="resetFilters()" class="ui-btn ui-btn-icon-left ui-icon-back ui-corner-all ui-shadow ui-mini">Reset</a>
+			</form>
 		</div>
 		
 		<div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="c">
@@ -107,7 +152,7 @@
 	<div data-role="page" id="select-camera-page">
 	
 		<div data-role="header" data-position="fixed"data-tap-toggle="false" data-theme="b">
-		<a href="#home-page" data-role="button" data-icon="delete" data-theme="a">Back</a>
+			<a href="#home-page" data-role="button" data-icon="delete" data-theme="a">Back</a>
 			<h1>Step 1: Select a camera</h1>
 		</div>
 		
