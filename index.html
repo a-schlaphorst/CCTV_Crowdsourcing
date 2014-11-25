@@ -73,6 +73,7 @@
 		margin-bottom: 114px;
 	}
 	#simple-content{
+		padding-top: 60px;
 		padding-left: 10px;
 		padding-right: 10px;
 	}
@@ -98,7 +99,8 @@
 	
 		<div data-role="header" id="home-page-header" data-position="fixed" data-tap-toggle="false" data-theme="b">
 			<a href="#filter-panel" data-role="button" data-icon="gear" data-theme="a">Filter</a>
-			<h1>App-Name</h1>
+			<h1>SeeCTV</h1>
+			<a href="#info-panel" data-role="button" data-icon="info" data-theme="a">Info</a>
 		</div>
 		
 		<div role="content" class="ui-content">
@@ -146,11 +148,131 @@
 			</form>
 		</div>
 		
+		<div data-role="panel" data-position="right" data-display="overlay" id="info-panel">
+			<ul data-role="listview">
+				<li><a href="#about-page">About</a></li>
+				<li><a href="#privacy-policy-page">Privacy Policy</a></li>
+				<li><a href="#faqs-page">FAQs</a></li>
+				<li><a href="#copyright-page">Copyright</a></li>
+			</ul>
+		</div>
+		
 		<div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="c">
 			<div data-role="navbar">
 				<ul>
 					<li><a href="#select-camera-page" data-icon="plus">Add a camera</a></li>
 					<li><a href="#" class="ui-btn-active ui-state-persist" data-icon="home">Map</a></li>
+					<li><a href="#navigate-page" data-icon="grid">Navigate</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div data-role="page" id="about-page">
+	
+		<div data-role="header" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false" data-theme="b">
+			<a href="#home-page" data-icon="delete" data-role="button" data-theme="a">Back</a>
+			<h1>About</h1>
+		</div>
+		
+		<div role="content" class="ui-content">
+			<p id="simple-content">
+				This is the "About"-Page.
+			</p>
+		</div>
+		
+		<div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="c">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#select-camera-page" data-icon="plus">Add a camera</a></li>
+					<li><a href="#home-page" data-icon="home">Map</a></li>
+					<li><a href="#navigate-page" data-icon="grid">Navigate</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div data-role="page" id="privacy-policy-page">
+	
+		<div data-role="header" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false" data-theme="b">
+			<a href="#home-page" data-icon="delete" data-role="button" data-theme="a">Back</a>
+			<h1>Privacy Policy</h1>
+		</div>
+		
+		<div role="content" class="ui-content">
+			<p id="simple-content">
+				This is the Privacy-Policy-Page.
+			</p>
+		</div>
+		
+		<div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="c">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#select-camera-page" data-icon="plus">Add a camera</a></li>
+					<li><a href="#home-page" data-icon="home">Map</a></li>
+					<li><a href="#navigate-page" data-icon="grid">Navigate</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div data-role="page" id="faqs-page">
+	
+		<div data-role="header" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false" data-theme="b">
+			<a href="#home-page" data-icon="delete" data-role="button" data-theme="a">Back</a>
+			<h1>FAQ</h1>
+		</div>
+		
+		<div role="content" class="ui-content">
+			<p id="simple-content">
+				This is the "FAQ"-Page.
+			</p>
+			<div data-role="collapsible" data-theme="a" data-content-theme="a">
+				<h4>What is this all about?</h4>
+				<p>Because</p>
+			</div>
+			<div data-role="collapsible" data-theme="a" data-content-theme="a">
+				<h4>Why are you doing this?</h4>
+				<p>Because</p>
+			</div>
+			<div data-role="collapsible" data-theme="a" data-content-theme="a">
+				<h4>How can I contribute?</h4>
+				<p>Just do it!</p>
+			</div>
+			<div data-role="collapsible" data-theme="a" data-content-theme="a">
+				<h4>How do I delete cameras?</h4>
+				<p>Just do it!</p>
+			</div>
+		
+		<div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="c">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#select-camera-page" data-icon="plus">Add a camera</a></li>
+					<li><a href="#home-page" data-icon="home">Map</a></li>
+					<li><a href="#navigate-page" data-icon="grid">Navigate</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div data-role="page" id="copyright-page">
+	
+		<div data-role="header" data-position="fixed" data-fullscreen="true"  data-tap-toggle="false" data-theme="b">
+			<a href="#home-page" data-icon="delete" data-role="button" data-theme="a">Back</a>
+			<h1>Copyright</h1>
+		</div>
+		
+		<div role="content" class="ui-content">
+			<p id="simple-content">
+				This is the "Copyright"-Page.
+			</p>
+		</div>
+		
+		<div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="c">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#select-camera-page" data-icon="plus">Add a camera</a></li>
+					<li><a href="#home-page" data-icon="home">Map</a></li>
 					<li><a href="#navigate-page" data-icon="grid">Navigate</a></li>
 				</ul>
 			</div>
