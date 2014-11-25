@@ -30,6 +30,14 @@
 	<script type="text/javascript" src="external/Control.OSMGeocoder.js"></script>
 	<link rel="stylesheet" href="external/Control.OSMGeocoder.css"/>
 	
+	<!--leaflet polyline encoder/decoder-->
+	<script type="text/javascript" src="external/Polyline.encoded.js"></script>	
+	
+	<!--leaflet MultiOptionPolyline-->
+	<script type="text/javascript" src="external/Leaflet.MultiOptionsPolyline.js"></script>	
+	
+	<!--google-maps api-->
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 	
 	<script src="delegator.js"></script>
 	<script src="homeMap.js"></script>
@@ -88,7 +96,7 @@
 
 	<div data-role="page" id="home-page">
 	
-		<div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
+		<div data-role="header" id="home-page-header" data-position="fixed" data-tap-toggle="false" data-theme="b">
 			<a href="#filter-panel" data-role="button" data-icon="gear" data-theme="a">Filter</a>
 			<h1>App-Name</h1>
 		</div>
@@ -209,11 +217,11 @@
 						<label for="radio-choice-h-2b">Low Surveillance</label>
 					</fieldset>
 				</form>
-				<label for="start-text-field">Start</label>
-				<input type="text" data-clear-btn="true" name="start-text-field" id="start-text-field" value="">
+				<label for="origin-text-field">Origin</label>
+				<input type="text" data-clear-btn="true" name="origin-text-field" id="origin-text-field" value="">
 				<label for="destination-text-field">Destination</label>
 				<input type="text" data-clear-btn="true" name="destination-text-field" id="destination-text-field" value="">
-				<a href="#" class="ui-btn ui-btn-b ui-btn-icon-left ui-icon-search ui-corner-all ui-shadow">Create Route</a>
+				<a href="#" class="ui-btn ui-btn-b ui-btn-icon-left ui-icon-search ui-corner-all ui-shadow" onClick="calculateRoute()">Calculate Route</a>
 			</div>
 		</div>
 		

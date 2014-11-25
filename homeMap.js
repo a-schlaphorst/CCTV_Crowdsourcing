@@ -3,6 +3,7 @@
 var homeMap;
 var positionCircle;
 var cameras = [];
+var directionsService = new google.maps.DirectionsService();
 
 /*****Functions*****/
 
@@ -23,8 +24,6 @@ function initializeHomeMap(){
 		maxZoom: 18
 	}).addTo(homeMap);
 	
-	homeMap.locate({watch: true});
-	homeMap.on('locationfound', onLocationFound);
 	
 	// create north arrow
 	var north = L.control({position: "topright"});
@@ -38,6 +37,15 @@ function initializeHomeMap(){
 	// create osm-geocoder-search
 	var osmGeocoder = new L.Control.OSMGeocoder();
 	homeMap.addControl(osmGeocoder);
+	
+	// create locateme button
+ 	L.control.locate({
+ 		icon: 'fa fa-map-marker',		
+ 		iconLoading: 'fa fa-spinner fa-spin'		
+ 	}).addTo(homeMap);
+	
+	// add listener
+	homeMap.on('locationfound', onLocationFound);
 	
 	// load polygons from database
 	loadCamerasFromDB();
@@ -156,13 +164,6 @@ function resetFilters(){
 
 function onLocationFound(location) {
 	locationCoordinates = location.latlng;
-	var radius = location.accuracy / 2;
-	if(positionCircle){
-		homeMap.removeLayer(positionCircle);
-	}
-    positionCircle = L.circle(locationCoordinates, radius, {color: "#8A8A8A"});
-	positionCircle.addTo(homeMap);
-	homeMap.panTo(locationCoordinates);
 	
 	$('#home-page-header').css({"background":"#40C740"});
 	for(var i = 0; i < cameras.length; i++){
@@ -172,3 +173,47 @@ function onLocationFound(location) {
 		}
 	}
 }
+
+function calculateRoute(){
+	var request = {
+      origin: $('#origin-text-field').val(),
+      destination: $('#destination-text-field').val(),
+      travelMode: google.maps.TravelMode["DRIVING"]
+	};
+	directionsService.route(request, function(response, status) {
+		if (status == google.maps.DirectionsStatus.OK) {
+			var path = L.Polyline.fromEncoded(response.routes[0].overview_polyline)
+			var coloredPath = getRouteSurveillance(path);
+			coloredPath.addTo(homeMap);
+			homeMap.fitBounds(coloredPath.getBounds());
+		}
+	});
+}
+
+function getRouteSurveillance(path){
+	var multiOptionsPolyline = L.multiOptionsPolyline(path, {
+		multiOptions: {
+			optionIdxFn: function (latLng) {
+				// check if segment is within surveilled area
+				for(var i = 0; i < cameras.length; i++){
+					if(cameras[i].getBounds().contains(latLng)){
+						// if true
+						return 0;
+					}
+				}			
+				// if false
+				return 1;
+			},
+			options: [
+				{color: '#FF4747'}, {color: '#40C740'}
+			]
+		},
+		weight: 5,
+		lineCap: 'butt',
+		opacity: 0.75,
+		smoothFactor: 1
+	});
+	
+	return multiOptionsPolyline;
+}
+
