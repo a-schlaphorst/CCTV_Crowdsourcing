@@ -76,7 +76,7 @@ function addEditablePolygon(clickLocation, type, radius){
 		if(bulletDirection){
 			// draw polygon
 			var bearing = getBearing(cameraLocation, clickLocation);
-			var circleExtractCoords = createCircleExtractPolygon(cameraLocation, bearing, angularSize, radius, Math.round(angularSize/36));
+			var circleExtractCoords = createCircleExtractPolygon(cameraLocation, bearing, 180, radius, Math.round(angularSize/36));
 			cameraShape = L.polygon(circleExtractCoords).addTo(addCameraMap);
 			cameraShape.enableEdit();
 			addCameraMap.removeLayer(originMarker);

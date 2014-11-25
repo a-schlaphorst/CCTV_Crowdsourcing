@@ -4,7 +4,6 @@ This class delegates the site navigation
 var cameraType;
 var cameraHeight;
 var viewingDistance;
-var angularSize;
 var description;
 var selectedCameraId;
 
@@ -37,7 +36,6 @@ $(document).delegate('.ui-page', 'pageshow', function() {
 		} else if(cameraType == "bullet") {
 		
 			cameraHeight = $('#slider-floor-level-bullet').val();
-			angularSize = $('#angular-size :radio:checked').val();
 			description = $('#bullet-description').val();
 			
 		} else if(cameraType == "mobile") {
