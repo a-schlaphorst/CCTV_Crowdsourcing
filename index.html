@@ -243,6 +243,7 @@
 				<h4>How do I delete cameras?</h4>
 				<p>Just do it!</p>
 			</div>
+		</div>
 		
 		<div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="c">
 			<div data-role="navbar">
@@ -329,21 +330,33 @@
 		</div>
 		
 		<div role="content" class="ui-content">
+		
 			<div class="simple-content">
+			
 				<form>
-					<fieldset data-role="controlgroup" data-type="horizontal" id="angular-size">
+					<fieldset data-role="controlgroup" data-type="horizontal" id="surveillance-mode">
 						<legend>What type of route are you looking for?</legend>
-						<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="45" checked="checked">
-						<label for="radio-choice-h-2a">High Surveillance</label>
-						<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="90">
-						<label for="radio-choice-h-2b">Low Surveillance</label>
+						<input type="radio" name="high-surveillance-route" id="high-surveillance-route" value="high-surveillance" checked="checked">
+						<label for="high-surveillance-route">High Surveillance</label>
+						<input type="radio" name="low-surveillance-route" id="low-surveillance-route" value="low-surveillance">
+						<label for="low-surveillance-route">Low Surveillance</label>
+					</fieldset>
+					<fieldset data-role="controlgroup" data-type="horizontal" id="travel-mode">
+						<legend>Please choose your travel mode</legend>
+						<input type="radio" name="travel-mode" id="walking-mode" value="WALKING" checked="checked">
+						<label for="walking-mode">Walking</label>
+						<input type="radio" name="travel-mode" id="driving-mode" value="DRIVING">
+						<label for="driving-mode">Driving</label>
 					</fieldset>
 				</form>
+				
 				<label for="origin-text-field">Origin</label>
 				<input type="text" data-clear-btn="true" name="origin-text-field" id="origin-text-field" value="">
 				<label for="destination-text-field">Destination</label>
 				<input type="text" data-clear-btn="true" name="destination-text-field" id="destination-text-field" value="">
-				<a href="#" class="ui-btn ui-btn-b ui-btn-icon-left ui-icon-search ui-corner-all ui-shadow" onClick="calculateRoute()">Calculate Route</a>
+				
+				<a href="#home-page" class="ui-btn ui-btn-b ui-btn-icon-left ui-icon-search ui-corner-all ui-shadow" onClick="calculateRoute()">Calculate Route</a>
+				
 			</div>
 		</div>
 		
