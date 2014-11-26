@@ -5,8 +5,8 @@
 	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no; target-densityDpi=device-dpi"/>
 	
 	<!--basic leaflet-->
-    <link type="text/css" rel="stylesheet" href="external/leaflet.css" />
-	<script type="text/javascript" src="external/leaflet.js"></script>
+    <link type="text/css" rel="stylesheet" href="external/stylesheets/leaflet.css" />
+	<script type="text/javascript" src="external/js/leaflet.js"></script>
 	
 	<!--basic jquery-->
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css" />
@@ -20,78 +20,35 @@
 	
 	<!--basic locatecontrol-->
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="external/L.Control.Locate.css"/>
-	<script type="text/javascript" src="external/L.Control.Locate.js"></script>
+	<link rel="stylesheet" href="external/stylesheets/L.Control.Locate.css"/>
+	<script type="text/javascript" src="external/js/L.Control.Locate.js"></script>
 	
 	<!--leaflet editable-->
-	<script type="text/javascript" src="external/Leaflet.Editable.js"></script>
+	<script type="text/javascript" src="external/js/Leaflet.Editable.js"></script>
 	
 	<!--leaflet osm-geocoder-search-->
-	<script type="text/javascript" src="external/Control.OSMGeocoder.js"></script>
-	<link rel="stylesheet" href="external/Control.OSMGeocoder.css"/>
+	<script type="text/javascript" src="external/js/Control.OSMGeocoder.js"></script>
+	<link rel="stylesheet" href="external/stylesheets/Control.OSMGeocoder.css"/>
 	
 	<!--leaflet polyline encoder/decoder-->
-	<script type="text/javascript" src="external/Polyline.encoded.js"></script>	
+	<script type="text/javascript" src="external/js/Polyline.encoded.js"></script>	
 	
 	<!--leaflet MultiOptionPolyline-->
-	<script type="text/javascript" src="external/Leaflet.MultiOptionsPolyline.js"></script>	
+	<script type="text/javascript" src="external/js/Leaflet.MultiOptionsPolyline.js"></script>	
 	
 	<!--google-maps api-->
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 	
-	<script src="delegator.js"></script>
-	<script src="homeMap.js"></script>
-	<script src="addCamera.js"></script>
-	<script src="comments.js"></script>
-	<script src="helperFunctions.js"></script>
-	<script src="geometryFunctions.js"></script>
+	<!--JavaScript functions-->
+	<script src="js/delegator.js"></script>
+	<script src="js/homeMap.js"></script>
+	<script src="js/addCamera.js"></script>
+	<script src="js/comments.js"></script>
+	<script src="js/helperFunctions.js"></script>
+	<script src="js/geometryFunctions.js"></script>
 	
-	<style>
-	#home-page {
-		height: 100%;
-	}
-	#add-camera-map-page {
-		height: 100%;
-	}
-	#map{
-		height: 100%;
-		width: 100%;
-	}
-	#add-camera-map{
-		height: 100%;
-		width: 100%;
-	}
-	#map-panel{
-		position : absolute;
-		top : 0;
-		right : 0;
-		bottom : 0;
-		left : 0;
-		margin-left: 0px;
-		margin-right: 0px;
-		margin-top: 44px;
-		margin-bottom: 114px;
-	}
-	#simple-content{
-		padding-top: 60px;
-		padding-left: 10px;
-		padding-right: 10px;
-	}
-	.center-image{
-		height:150px;
-		margin-left: auto;
-		margin-right: auto;
-	}
-	.comment {
-		padding-left: 5px;
-		padding-right: 5px;
-		border-radius: 10px;
-		background-color: #fff;
-	}
-	.description {
-		padding-bottom: 5px;
-	}
-	</style>
+	<!--Layout-->
+	<link rel="stylesheet" href="stylesheets/common.css"/>
 </head>
 <body>
 

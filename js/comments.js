@@ -28,7 +28,7 @@ function fillCommentsPage(id){
 		}
 	}
 	
-	xmlhttp.open("GET","getcomments.php?camid=" + id,true);
+	xmlhttp.open("GET","php/getcomments.php?camid=" + id,true);
 	xmlhttp.send();
 }
 
@@ -58,6 +58,6 @@ function addComment(){
 			}, 2000);
 		}
 	}
-	xmlhttp.open("GET","postcomment.php?camid=" + commentCamera + "&comment=" + comment,true);
+	xmlhttp.open("GET","php/postcomment.php?camid=" + commentCamera + "&comment=" + comment,true);
 	xmlhttp.send();
 }

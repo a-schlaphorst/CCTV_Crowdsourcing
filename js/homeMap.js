@@ -108,7 +108,7 @@ function loadCamerasFromDB(){
 							}
 						}
 	
-						xmlhttp.open("GET","postconfirmation.php?id=" + properties.id + "&confirmtimes=" + properties.confirmtimes,true);
+						xmlhttp.open("GET","php/postconfirmation.php?id=" + properties.id + "&confirmtimes=" + properties.confirmtimes,true);
 						xmlhttp.send();
 					});
 					
@@ -133,7 +133,7 @@ function loadCamerasFromDB(){
 			}
 		}
 	}
-	xmlhttp.open("GET","getcameras.php?dome=" + filterParams.dome +
+	xmlhttp.open("GET","php/getcameras.php?dome=" + filterParams.dome +
 		"&bullet=" + filterParams.bullet +
 		"&mobile=" + filterParams.mobile + 
 		"&threshold=" + filterParams.threshold +

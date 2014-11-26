@@ -1,0 +1,52 @@
+#home-page {
+		height: 100%;
+}
+
+#add-camera-map-page {
+		height: 100%;
+}
+
+#map{
+		height: 100%;
+		width: 100%;
+}
+
+#add-camera-map{
+		height: 100%;
+		width: 100%;
+}
+
+#map-panel{
+		position : absolute;
+		top : 0;
+		right : 0;
+		bottom : 0;
+		left : 0;
+		margin-left: 0px;
+		margin-right: 0px;
+		margin-top: 44px;
+		margin-bottom: 114px;
+}
+
+#simple-content{
+		padding-top: 60px;
+		padding-left: 10px;
+		padding-right: 10px;
+}
+
+.center-image{
+		height:150px;
+		margin-left: auto;
+		margin-right: auto;
+}
+
+.comment {
+		padding-left: 5px;
+		padding-right: 5px;
+		border-radius: 10px;
+		background-color: #fff;
+}
+
+.description {
+		padding-bottom: 5px;
+}

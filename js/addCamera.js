@@ -123,7 +123,7 @@ function confirmCamera(){
 			$.mobile.changePage( "#home-page", { transition: "slideup", changeHash: false });
 		}
 	}
-	xmlhttp.open("GET","postcamera.php?type=" + selectedCameraType + 
+	xmlhttp.open("GET","php/postcamera.php?type=" + selectedCameraType + 
 		"&height=" + cameraHeight + 
 		"&description=" + cameraDescription +
 		"&centroid=" + centroid + 
