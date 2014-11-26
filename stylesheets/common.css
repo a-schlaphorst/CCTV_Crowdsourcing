@@ -9,6 +9,7 @@
 #map{
 		height: 100%;
 		width: 100%;
+		z-index: 9;
 }
 
 #add-camera-map{
@@ -49,4 +50,32 @@
 
 .description {
 		padding-bottom: 5px;
+}
+
+.center {
+    text-align: center;
+    position:relative;
+    z-index: 3;
+}
+
+#legende {
+    position: absolute;
+    bottom: 50px;
+    left: 10px;
+    z-index: 999;
+    width: 130px;
+    min-height: 80px;
+    background-color: rgb(255,255,255);
+    border-radius: 4px;
+    box-shadow: 0px 1px 5px rgba(0,0,0,0.4);
+    font-size: 8pt;
+    padding: 5px;  
+    background-position: 50% 50%;
+}
+
+#interpolationClasses table td {
+    padding-left:5px;
+    padding-right:5px;
+    padding-top:2px;
+    padding-bottom:2px;
 }

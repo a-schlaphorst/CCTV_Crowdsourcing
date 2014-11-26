@@ -33,13 +33,13 @@ function convertLeafletLocationToString(location){
 
 function getCameraTypeString(id){
 	if(id == 1){
-		return "dome";
+		return "360&deg; camera";
 	} 
 	else if(id == 2){
-		return "bullet";
+		return "180&deg; camera";
 	}
 	else if (id == 3){
-		return "mobile";
+		return "mobile camera";
 	} else {
 		return "NA"
 	}
@@ -61,15 +61,15 @@ function getCameraTypeId(string){
 
 function getCameraColor(type){
 	if(type == 1){
-		return "#FF5E5E";
+		return "#ff0000";
 	} 
 	else if(type == 2){
-		return "#FFF25E";
+		return "#ffa500";
 	} 
 	else if(type == 3){
-		return "#5E61FF";
+		return "#0000cd";
 	} else {
-		return "A8A8A8"
+		return "#A8A8A8"
 	}
 }
 
@@ -77,4 +77,14 @@ function getTimestamp(){
 	var date = new Date();
 	var timestamp = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
 	return timestamp;
+}
+
+// toggle visibility of div-elements in webpage
+function toggle_visibility(id) {
+    var e = document.getElementById(id);
+    if (e.style.display != 'block' || e.style.display == null || e.style.display == undefined) {
+        e.style.display = 'block';
+    } else {
+        e.style.display = 'none';
+    }
 }

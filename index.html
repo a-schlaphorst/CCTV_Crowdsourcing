@@ -46,6 +46,7 @@
 	<script src="js/comments.js"></script>
 	<script src="js/helperFunctions.js"></script>
 	<script src="js/geometryFunctions.js"></script>
+	<script src="js/route.js"></script>
 	
 	<!--Layout-->
 	<link rel="stylesheet" href="stylesheets/common.css"/>
@@ -62,7 +63,22 @@
 		
 		<div role="content" class="ui-content">
 			<div data-role="listview" id="map-panel">
-				<div id="map"></div>
+				<div id="map">
+					<div id=legende>
+						<div class=center><b>Legend</b></div>
+						<div id=interpolationClasses>
+							<table>
+								<tr><td style="background-color: rgb(255,0,0); width:10px">&nbsp;&nbsp;&nbsp;</td><td id="redValue">360&deg; camera</td></tr>
+								<tr><td style="background-color: rgb(255,165,0); width:10px">&nbsp;&nbsp;&nbsp;</td><td id="orangeValue">180&deg; camera</td></tr>
+								<tr><td style="background-color: rgb(0,0,205); width:10px">&nbsp;&nbsp;&nbsp;</td><td id="yellowValue">mobile camera</td></tr>
+							</table>
+						</div>
+						<div id="routeButton" style="display: none">
+							<hr>
+							<input type="button" onClick="removeRoute()" value="Remove route" data-mini=true>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		
