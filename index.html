@@ -309,9 +309,9 @@
 				<form>
 					<fieldset data-role="controlgroup" data-type="horizontal" id="surveillance-mode">
 						<legend>What type of route are you looking for?</legend>
-						<input type="radio" name="high-surveillance-route" id="high-surveillance-route" value="high-surveillance" checked="checked">
+						<input type="radio" name="surveillance-mode" id="high-surveillance-route" value="high-surveillance" checked="checked">
 						<label for="high-surveillance-route">High Surveillance</label>
-						<input type="radio" name="low-surveillance-route" id="low-surveillance-route" value="low-surveillance">
+						<input type="radio" name="surveillance-mode" id="low-surveillance-route" value="low-surveillance">
 						<label for="low-surveillance-route">Low Surveillance</label>
 					</fieldset>
 					<fieldset data-role="controlgroup" data-type="horizontal" id="travel-mode">
@@ -520,6 +520,10 @@
 	
 	<div data-role="popup" data-theme="a" id="confirmationRegisteredPopup">
 		<p>Your confirmation has been registered<p>
+	</div>
+	
+	<div data-role="popup" data-theme="a" id="routeSurveillancePopup">
+		<p id="route-surveillance-text"><p>
 	</div>
 </div>
 </body>
