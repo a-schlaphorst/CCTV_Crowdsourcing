@@ -112,7 +112,33 @@ function loadCamerasFromDB(){
 							}
 						}
 	
-						xmlhttp.open("GET","php/postconfirmation.php?id=" + properties.id + "&confirmtimes=" + properties.confirmtimes,true);
+						xmlhttp.open("GET","php/postconfirmation.php?id=" + properties.id + "&confirmtimes=" + (parseInt(properties.confirmtimes) + 1),true);
+						xmlhttp.send();
+					});
+					
+					container.on('click', '#declineCamera', function() {
+						// register vote on db
+						if (window.XMLHttpRequest) {
+						// code for IE7+, Firefox, Chrome, Opera, Safari
+							xmlhttp = new XMLHttpRequest();
+						} else { // code for IE6, IE5
+							xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+						}
+						xmlhttp.onreadystatechange = function() {
+							if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+								// show pop up
+								$( "#confirmationRegisteredPopup" ).popup();
+								$( "#confirmationRegisteredPopup" ).popup( "open" );
+								setTimeout(function(){
+									$( "#confirmationRegisteredPopup" ).popup("close")
+								}, 2000);
+						
+								// reload cams on map
+								loadCamerasFromDB();
+							}
+						}
+	
+						xmlhttp.open("GET","php/postconfirmation.php?id=" + properties.id + "&confirmtimes=" + (parseInt(properties.confirmtimes) - 1),true);
 						xmlhttp.send();
 					});
 					
@@ -124,9 +150,12 @@ function loadCamerasFromDB(){
 						'<tr><td><b>Submission</b></td><td>'  + properties.time + '</td></tr>' +
 						'<tr><td><b>Floor-level</b></td><td>'  + properties.height + '</td></tr>' +
 						'<tr><td><b>Camera-ID</b></td><td>'  + properties.id + '</td></tr>' +
-						'<tr><td><b>Confirmations</b></td><td>' + properties.confirmtimes + '</td></tr>' +
+						'<tr><td><b>Rating</b></td><td>' + getStarRating(properties.confirmtimes) + '(' + properties.confirmtimes + ')</td></tr>' +
 						'<tr><td><a href="#camera-comments-page" id="seeComments" class="link">Comments</a></td>' +
-						'<td><a href="#" id="confirmCamera" class="link">Confirm</a></td></tr></table></div>');
+						'<td>' +
+							'<a href="#" id="confirmCamera" class="link"><img src="images/voteup.png"></a>&nbsp;&nbsp;&nbsp;' +
+							'<a href="#" id="declineCamera" class="link"><img src="images/votedown.png"></a>' +
+						'</td></tr></table></div>');
 
 					// Insert the container into the popup
 					polygon.bindPopup(container[0]);

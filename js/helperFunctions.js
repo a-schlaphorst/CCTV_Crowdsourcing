@@ -88,3 +88,20 @@ function toggle_visibility(id) {
         e.style.display = 'none';
     }
 }
+
+// return stars-html-element based on actual confirmations
+function getStarRating(confirmtimes){
+	if(confirmtimes <= 0){
+		return "<img src='images/star0.gif'>";
+	} else if (confirmtimes == 1){
+		return "<img src='images/star1.gif'>";
+	} else if (confirmtimes == 2){
+		return "<img src='images/star2.gif'>";
+	} else if (confirmtimes == 3){
+		return "<img src='images/star3.gif'>";
+	} else if (confirmtimes == 4){
+		return "<img src='images/star4.gif'>";
+	} else if (confirmtimes >= 5){
+		return "<img src='images/star5.gif'>";
+	}
+}
