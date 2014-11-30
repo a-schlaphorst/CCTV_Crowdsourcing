@@ -55,6 +55,9 @@ function initializeHomeMap(){
 	loadCamerasFromDB();
 }
 
+/*
+Load cameras from db, display in propert color and create popup with voting function
+*/
 function loadCamerasFromDB(){
 	// Delete old camera from map
 	if(cameras){
@@ -91,55 +94,16 @@ function loadCamerasFromDB(){
 					});
 					
 					container.on('click', '#confirmCamera', function() {
-						// register vote on db
-						if (window.XMLHttpRequest) {
-						// code for IE7+, Firefox, Chrome, Opera, Safari
-							xmlhttp = new XMLHttpRequest();
-						} else { // code for IE6, IE5
-							xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-						}
-						xmlhttp.onreadystatechange = function() {
-							if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-								// show pop up
-								$( "#confirmationRegisteredPopup" ).popup();
-								$( "#confirmationRegisteredPopup" ).popup( "open" );
-								setTimeout(function(){
-									$( "#confirmationRegisteredPopup" ).popup("close")
-								}, 2000);
-						
-								// reload cams on map
-								loadCamerasFromDB();
-							}
-						}
-	
-						xmlhttp.open("GET","php/postconfirmation.php?id=" + properties.id + "&confirmtimes=" + (parseInt(properties.confirmtimes) + 1),true);
-						xmlhttp.send();
+						confirmCamera(properties.id, properties.confirmtimes);
 					});
 					
 					container.on('click', '#declineCamera', function() {
-						// register vote on db
-						if (window.XMLHttpRequest) {
-						// code for IE7+, Firefox, Chrome, Opera, Safari
-							xmlhttp = new XMLHttpRequest();
-						} else { // code for IE6, IE5
-							xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+						declineCamera(properties.id, properties.confirmtimes);
+						if(parseInt(properties.confirmtimes) <= -9){
+							deleteCameraFromDb(properties.id);
 						}
-						xmlhttp.onreadystatechange = function() {
-							if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-								// show pop up
-								$( "#confirmationRegisteredPopup" ).popup();
-								$( "#confirmationRegisteredPopup" ).popup( "open" );
-								setTimeout(function(){
-									$( "#confirmationRegisteredPopup" ).popup("close")
-								}, 2000);
-						
-								// reload cams on map
-								loadCamerasFromDB();
-							}
-						}
-	
-						xmlhttp.open("GET","php/postconfirmation.php?id=" + properties.id + "&confirmtimes=" + (parseInt(properties.confirmtimes) - 1),true);
-						xmlhttp.send();
+						// reload cams on map
+						loadCamerasFromDB();
 					});
 					
 					container.html('<table>' + 
@@ -178,6 +142,9 @@ function loadCamerasFromDB(){
 	xmlhttp.send();
 }
 
+/*
+Return object containing all filter params
+*/
 function getFilterParams(){
 	return {
 		"dome": $('#dome-flipswitch').val(),
@@ -188,6 +155,10 @@ function getFilterParams(){
 	}
 }
 
+
+/*
+Reset filter settings in sidebar
+*/
 function resetFilters(){
 	$('#dome-flipswitch').val("on").slider("refresh");;
 	$('#bullet-flipswitch').val("on").slider("refresh");;
@@ -197,6 +168,10 @@ function resetFilters(){
 	loadCamerasFromDB();
 }
 
+/*
+On user Location found. Set color of header to green if position is not under surveillance
+otherwise set color of header to red. //TODO: detect turning off of location function in map
+*/
 function onLocationFound(location) {
 	locationCoordinates = location.latlng;
 	
@@ -207,4 +182,76 @@ function onLocationFound(location) {
 			$('#home-page-header').css({"background":"#FF4747"});
 		}
 	}
+}
+
+/*
+Confirm camera in db. Set confirmtimes = confirmtimes + 1
+*/
+function confirmCamera(cameraId, confirmtimes){
+	if (window.XMLHttpRequest) {
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp = new XMLHttpRequest();
+	} else { // code for IE6, IE5
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			// show pop up
+			$( "#confirmationRegisteredPopup" ).popup();
+			$( "#confirmationRegisteredPopup" ).popup( "open" );
+			setTimeout(function(){
+				$( "#confirmationRegisteredPopup" ).popup("close")
+			}, 2000);
+		}
+	}
+	xmlhttp.open("GET","php/postconfirmation.php?id=" + cameraId + "&confirmtimes=" + (parseInt(confirmtimes) + 1),true);
+	xmlhttp.send();
+}
+
+/*
+Decline camera in db. Set confirmtimes = confirmtimes - 1
+*/
+function declineCamera(cameraId, confirmtimes){
+	if (window.XMLHttpRequest) {
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp = new XMLHttpRequest();
+	} else { // code for IE6, IE5
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			// show pop up
+			$( "#confirmationRegisteredPopup" ).popup();
+			$( "#confirmationRegisteredPopup" ).popup( "open" );
+			setTimeout(function(){
+				$( "#confirmationRegisteredPopup" ).popup("close")
+			}, 2000);
+		}
+	}
+
+	xmlhttp.open("GET","php/postconfirmation.php?id=" + cameraId + "&confirmtimes=" + (parseInt(confirmtimes) - 1),true);
+	xmlhttp.send();
+}
+
+/*
+Delete camera from db by id. This function is usually used if a camera has confirmtimes below -10
+*/
+function deleteCameraFromDb(cameraId){
+	if (window.XMLHttpRequest) {
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp = new XMLHttpRequest();
+	} else { // code for IE6, IE5
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			debugger;
+		}
+	}
+
+	xmlhttp.open("GET","php/deletecamera.php?id=" + cameraId,true);
+	xmlhttp.send();
 }
