@@ -98,7 +98,7 @@ function addEditablePolygon(clickLocation, type, radius){
 	}	
 }
 
-function confirmCamera(){
+function postCamera(){
 	if(!cameraShape){
 		return;
 	}
