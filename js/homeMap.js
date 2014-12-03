@@ -95,6 +95,14 @@ function loadCamerasFromDB(){
 					
 					container.on('click', '#confirmCamera', function() {
 						confirmCamera(properties.id, properties.confirmtimes);
+						// reload cams on map
+						loadCamerasFromDB();
+						// show pop up
+						$( "#confirmationRegisteredPopup" ).popup();
+						$( "#confirmationRegisteredPopup" ).popup( "open" );
+						setTimeout(function(){
+							$( "#confirmationRegisteredPopup" ).popup("close")
+						}, 2000);
 					});
 					
 					container.on('click', '#declineCamera', function() {
@@ -104,6 +112,12 @@ function loadCamerasFromDB(){
 						}
 						// reload cams on map
 						loadCamerasFromDB();
+						// show pop up
+						$( "#confirmationRegisteredPopup" ).popup();
+						$( "#confirmationRegisteredPopup" ).popup( "open" );
+						setTimeout(function(){
+							$( "#confirmationRegisteredPopup" ).popup("close")
+						}, 2000);
 					});
 					
 					container.html('<table>' + 
@@ -197,12 +211,6 @@ function confirmCamera(cameraId, confirmtimes){
 	
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			// show pop up
-			$( "#confirmationRegisteredPopup" ).popup();
-			$( "#confirmationRegisteredPopup" ).popup( "open" );
-			setTimeout(function(){
-				$( "#confirmationRegisteredPopup" ).popup("close")
-			}, 2000);
 		}
 	}
 	xmlhttp.open("GET","php/postconfirmation.php?id=" + cameraId + "&confirmtimes=" + (parseInt(confirmtimes) + 1),true);
@@ -222,12 +230,6 @@ function declineCamera(cameraId, confirmtimes){
 
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			// show pop up
-			$( "#confirmationRegisteredPopup" ).popup();
-			$( "#confirmationRegisteredPopup" ).popup( "open" );
-			setTimeout(function(){
-				$( "#confirmationRegisteredPopup" ).popup("close")
-			}, 2000);
 		}
 	}
 
