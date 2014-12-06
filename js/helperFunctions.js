@@ -31,6 +31,18 @@ function convertLeafletLocationToString(location){
 	return coord;
 }
 
+/*
+Convert array of leaflet-coordinate-objects to google-coordinate-objects
+*/
+function convertLeafletToGoogleLatLngs(coordinates){
+	var googleCoords = [];
+	for(var i = 0; i <  coordinates.length; i++){
+		googleCoords.push(new google.maps.LatLng(coordinates[i].lat, coordinates[i].lng))
+	}
+	
+	return googleCoords;
+}
+
 function getCameraTypeString(id){
 	if(id == 1){
 		return "360&deg; camera";
