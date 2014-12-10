@@ -58,6 +58,12 @@
     z-index: 3;
 }
 
+.logo {
+	margin-left: auto;
+    margin-right: auto;
+	display: block;
+}
+
 #legende {
     position: absolute;
     bottom: 50px;
