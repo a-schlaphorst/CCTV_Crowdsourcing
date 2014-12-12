@@ -41,7 +41,8 @@ function getAdditionalWaypoints(coordinates){
 	var polyline = L.polyline(coordinates);
 	
 	var waypoints = [];
-	var threshold = 10;
+	var waypointDistances = [];
+	var threshold = 300;
 		
 	for(var i = 0; i <  cameras.length; i++){
 		camLatLng = cameras[i].getLatLngs()[0];
@@ -51,14 +52,21 @@ function getAdditionalWaypoints(coordinates){
 			var d = path[j].distanceTo(camLatLng);
 			if (d < threshold){
 				waypoints.push(camLatLng);
-				if(waypoints.length == 8){
-					return waypoints;
-				}
+				waypointDistances.push(d);
 			}
 		}
 	}
-	debugger;
-    return waypoints;
+	chosenWaypoints = [];
+	for(var i = 0; i < 8; i++){
+		if(waypoints.length < i){
+			break;
+		}
+		var maxIndex = waypointDistances.indexOf(Math.max.apply(Math, waypointDistances));
+		chosenWaypoints.push(waypoints[maxIndex]);
+		waypoints.splice(maxIndex, 1);
+		waypointDistances.splice(maxIndex, 1);
+	}
+    return chosenWaypoints;
 }
 
 function createSurveillanceRoute(coordinates){
@@ -99,6 +107,9 @@ function createSurveillanceRoute(coordinates){
 	$( "#route-surveillance-text").text(surveillanceHint);
 	$( "#routeSurveillancePopup" ).popup();
 	$( "#routeSurveillancePopup" ).popup( "open" );
+	setTimeout(function(){
+		$( "#routeSurveillancePopup" ).popup("close")
+	}, 2000);
 	
 	// display "remove route" button
 	toggle_visibility('routeButton');
