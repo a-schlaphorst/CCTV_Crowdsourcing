@@ -130,3 +130,22 @@ function getIndexOfMinDistance(waypoints){
 	}
 	return index;
 }
+
+// calculates the area of a polygon (array of coordinates)
+function getPolygonArea(coordinates){
+	// create ring (add first element to the end)
+	coordinates.push(coordinates[0]);
+	var area = 0.0;
+	var length = coordinates.length;
+	if (length > 2) {
+		var p1;
+		var p2;
+		for (var i = 0; i < length - 1; i++) {
+			p1 = coordinates[i];
+			p2 = coordinates[i+1];
+			area = area + toRadians(p2.lng - p1.lng) * (2 + Math.sin(toRadians(p1.lat)) + Math.sin(toRadians(p2.lat)));
+		}
+		area = area * 6378137.0 * 6378137.0 / 2.0;
+	}
+	return area;
+}

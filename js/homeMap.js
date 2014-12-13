@@ -4,7 +4,10 @@ var homeMap;
 var positionCircle;
 var cameras = [];
 
-// array of route-paths with different colored
+var MAX_CAMERA_AREA = 2000;
+var MAX_CAMERA_VERTICES = 20;
+
+// array of route-paths with different colors
 routePaths = [];
 
 var directionsService = new google.maps.DirectionsService();
@@ -136,10 +139,9 @@ function loadCamerasFromDB(){
 				);
 				// Insert the container into the popup
 				polygon.bindPopup(container[0]);
-				polygon.cameraId = properties.id;
-				cameras.push(polygon);
+				cameras.push(polygon)
 			});
-			//TODO add polygons to map
+			// add polygons to map (possible improvement: not as a single layer)
 			for(var k = 0; k < cameras.length; k++){
 				cameras[k].addTo(homeMap);
 			}

@@ -100,10 +100,21 @@ function addEditablePolygon(clickLocation, type, radius){
 }
 
 function postCamera(){
+	// chech if there is a polygon
 	if(!cameraShape){
 		return;
 	}
 	
+	// check if amount of vertices is not too high
+	var vertices = cameraShape.getLatLngs();
+	if(vertices.length > MAX_CAMERA_VERTICES){
+		alert("Your camera has too many vertices");
+		return;
+	}
+	if(getPolygonArea(vertices) > MAX_CAMERA_AREA){
+		alert("Your camera-area is too big");
+		return;
+	}
 	cameraShape.disableEdit();
 	
 	// get attributes
