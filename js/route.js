@@ -41,7 +41,6 @@ function getAdditionalWaypoints(coordinates){
 	var polyline = L.polyline(coordinates);
 	
 	var waypoints = [];
-	var waypointDistances = [];
 	var threshold = 300;
 		
 	for(var i = 0; i <  cameras.length; i++){
@@ -49,10 +48,9 @@ function getAdditionalWaypoints(coordinates){
 
 		var path = polyline.getLatLngs();
 		for (var j = 0; j < path.length; j++) {
-			var d = path[j].distanceTo(camLatLng);
-			if (d < threshold){
+			camLatLng.distance = path[j].distanceTo(camLatLng);
+			if (camLatLng.distance < threshold){
 				waypoints.push(camLatLng);
-				waypointDistances.push(d);
 			}
 		}
 	}
@@ -61,10 +59,9 @@ function getAdditionalWaypoints(coordinates){
 		if(waypoints.length < i){
 			break;
 		}
-		var maxIndex = waypointDistances.indexOf(Math.max.apply(Math, waypointDistances));
-		chosenWaypoints.push(waypoints[maxIndex]);
-		waypoints.splice(maxIndex, 1);
-		waypointDistances.splice(maxIndex, 1);
+		var index = getIndexOfMinDistance(waypoints);
+		chosenWaypoints.push(waypoints[index]);
+		waypoints.splice(index, 1);
 	}
     return chosenWaypoints;
 }

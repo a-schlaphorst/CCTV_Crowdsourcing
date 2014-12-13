@@ -83,62 +83,61 @@ function loadCamerasFromDB(){
 		
 			$.each(results.features, function(i, camera){
 				var coordinates = convertCoordsToLeaflet(camera.geometry.coordinates[0]);
-				for(var j = 0; j < coordinates.length; j++){
-					var properties = camera.properties;
-					var polygon = L.polygon(coordinates, {color: getCameraColor(properties.type), fillOpacity: 0.1, opacity: 0.1, lineJoin: "round"});
-					var container = $('<div>');
-					
-					container.on('click', '#seeComments', function() {
-						selectedCameraId = properties.id;
-						fillCommentsPage(selectedCameraId);
-					});
-					
-					container.on('click', '#confirmCamera', function() {
-						confirmCamera(properties.id, properties.confirmtimes);
-						// reload cams on map
-						loadCamerasFromDB();
-						// show pop up
-						$( "#confirmationRegisteredPopup" ).popup();
-						$( "#confirmationRegisteredPopup" ).popup( "open" );
-						setTimeout(function(){
-							$( "#confirmationRegisteredPopup" ).popup("close")
-						}, 2000);
-					});
-					
-					container.on('click', '#declineCamera', function() {
-						declineCamera(properties.id, properties.confirmtimes);
-						if(parseInt(properties.confirmtimes) <= -9){
-							deleteCameraFromDb(properties.id);
-						}
-						// reload cams on map
-						loadCamerasFromDB();
-						// show pop up
-						$( "#confirmationRegisteredPopup" ).popup();
-						$( "#confirmationRegisteredPopup" ).popup( "open" );
-						setTimeout(function(){
-							$( "#confirmationRegisteredPopup" ).popup("close")
-						}, 2000);
-					});
-					
-					container.html('<table>' + 
-						'<tr><td><b>Description</b></td><td>' + properties.description + '</td></tr>' +
-						'<tr><td><b>Latitude</b></td><td>' + coordinates[j].lat + '</td></tr>' +
-						'<tr><td><b>Longitude</b></td><td>' + coordinates[j].lng + '</td></tr>' +
-						'<tr><td><b>Type</b></td><td>' + getCameraTypeString(properties.type) + '</td></tr>' +					
-						'<tr><td><b>Submission</b></td><td>'  + properties.time + '</td></tr>' +
-						'<tr><td><b>Floor-level</b></td><td>'  + properties.height + '</td></tr>' +
-						'<tr><td><b>Camera-ID</b></td><td>'  + properties.id + '</td></tr>' +
-						'<tr><td><b>Rating</b></td><td>' + getStarRating(properties.confirmtimes) + '(' + properties.confirmtimes + ')</td></tr>' +
-						'<tr><td><a href="#camera-comments-page" id="seeComments" class="link">Comments</a></td>' +
-						'<td>' +
-							'<a href="#" id="confirmCamera" class="link"><img src="images/voteup.png"></a>&nbsp;&nbsp;&nbsp;' +
-							'<a href="#" id="declineCamera" class="link"><img src="images/votedown.png"></a>' +
-						'</td></tr></table></div>');
-
-					// Insert the container into the popup
-					polygon.bindPopup(container[0]);
-					cameras.push(polygon);
-				}
+				var properties = camera.properties;
+				var polygon = L.polygon(coordinates, {color: getCameraColor(properties.type), fillOpacity: 0.5, opacity: 0.5, lineJoin: "round"});
+				var container = $('<div>');
+				
+				container.on('click', '#seeComments', function() {
+					selectedCameraId = properties.id;
+					fillCommentsPage(selectedCameraId);
+				});
+				
+				container.on('click', '#confirmCamera', function() {
+					confirmCamera(properties.id, properties.confirmtimes);
+					// reload cams on map
+					loadCamerasFromDB();
+					// show pop up
+					$( "#confirmationRegisteredPopup" ).popup();
+					$( "#confirmationRegisteredPopup" ).popup( "open" );
+					setTimeout(function(){
+						$( "#confirmationRegisteredPopup" ).popup("close")
+					}, 2000);
+				});
+				
+				container.on('click', '#declineCamera', function() {
+					declineCamera(properties.id, properties.confirmtimes);
+					if(parseInt(properties.confirmtimes) <= -9){
+						deleteCameraFromDb(properties.id);
+					}
+					// reload cams on map
+					loadCamerasFromDB();
+					// show pop up
+					$( "#confirmationRegisteredPopup" ).popup();
+					$( "#confirmationRegisteredPopup" ).popup( "open" );
+					setTimeout(function(){
+						$( "#confirmationRegisteredPopup" ).popup("close")
+					}, 2000);
+				});
+				
+				container.html('<table>' + 
+					'<tr><td><b>Description</b></td><td>' + properties.description + '</td></tr>' +
+					'<tr><td><b>Latitude</b></td><td>' + coordinates[0].lat + '</td></tr>' +
+					'<tr><td><b>Longitude</b></td><td>' + coordinates[0].lng + '</td></tr>' +
+					'<tr><td><b>Type</b></td><td>' + getCameraTypeString(properties.type) + '</td></tr>' +					
+					'<tr><td><b>Submission</b></td><td>'  + properties.time + '</td></tr>' +
+					'<tr><td><b>Floor-level</b></td><td>'  + properties.height + '</td></tr>' +
+					'<tr><td><b>Camera-ID</b></td><td>'  + properties.id + '</td></tr>' +
+					'<tr><td><b>Rating</b></td><td>' + getStarRating(properties.confirmtimes) + '(' + properties.confirmtimes + ')</td></tr>' +
+					'<tr><td><a href="#camera-comments-page" id="seeComments" class="link">Comments</a></td>' +
+					'<td>' +
+						'<a href="#" id="confirmCamera" class="link"><img src="images/voteup.png"></a>&nbsp;&nbsp;&nbsp;' +
+						'<a href="#" id="declineCamera" class="link"><img src="images/votedown.png"></a>' +
+					'</td></tr></table></div>'
+				);
+				// Insert the container into the popup
+				polygon.bindPopup(container[0]);
+				polygon.cameraId = properties.id;
+				cameras.push(polygon);
 			});
 			//TODO add polygons to map
 			for(var k = 0; k < cameras.length; k++){

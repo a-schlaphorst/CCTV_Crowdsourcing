@@ -117,3 +117,16 @@ function getStarRating(confirmtimes){
 		return "<img src='images/star5.gif'>";
 	}
 }
+
+// return index of arrayelement with lowest value for waypoints.distance
+function getIndexOfMinDistance(waypoints){
+	index = 0;
+	minDistance = 0;
+	for(var i = 0; i < waypoints.length; i++){
+		if(i == 0 || waypoints[i].distance < minDistance){
+			minDistance = waypoints[i].distance;
+			index = i;
+		}
+	}
+	return index;
+}
