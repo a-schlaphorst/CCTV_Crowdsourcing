@@ -81,6 +81,7 @@ function addEditablePolygon(clickLocation, type, radius){
 			cameraShape = L.polygon(circleExtractCoords).addTo(addCameraMap);
 			cameraShape.enableEdit();
 			addCameraMap.removeLayer(originMarker);
+			drawEditable = true;
 		} else{
 			// save camera location
 			cameraLocation = clickLocation;
@@ -93,7 +94,7 @@ function addEditablePolygon(clickLocation, type, radius){
 			$( "#drawBearingPopup" ).popup();
 			$( "#drawBearingPopup" ).popup( "open" );
 			setTimeout(function(){
-				$( "#drawBearingPopup" ).popup("close")
+				$( "#drawBearingPopup" ).popup("close");
 			}, 2000);
 		}
 	}	
@@ -108,11 +109,21 @@ function postCamera(){
 	// check if amount of vertices is not too high
 	var vertices = cameraShape.getLatLngs();
 	if(vertices.length > MAX_CAMERA_VERTICES){
-		alert("Your camera has too many vertices");
+		$( "#verticesWarningPopup" ).popup();
+		$( "#verticesWarningPopup" ).popup( "open" );
+		setTimeout(function(){
+			$( "#verticesWarningPopup" ).popup("close");
+			addCameraMap.removeLayer(cameraShape);
+			drawEditable = true;
+		}, 2000);
 		return;
 	}
 	if(getPolygonArea(vertices) > MAX_CAMERA_AREA){
-		alert("Your camera-area is too big");
+		$( "#areaWarningPopup" ).popup();
+		$( "#areaWarningPopup" ).popup( "open" );
+		setTimeout(function(){
+			$( "#areaWarningPopup" ).popup("close");
+		}, 2000);
 		return;
 	}
 	cameraShape.disableEdit();
