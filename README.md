@@ -4,7 +4,7 @@ SeeCTV
 **University of Minnesota + University of Muenster**<br/>
 **Course: LocationPrivacy**<br/>
 **Season: WiSe13/14**<br/>
-**Link to our project:** Coming soon<br/>
+**Link to our project:** http://giv-locationprivacy.uni-muenster.de/seectv<br/>
 
 ***
 
